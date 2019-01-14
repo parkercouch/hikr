@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
   user.associate = function userAssociations(models) {
-    models.user.belongsToMany(models.user, { as: 'Matched', through: 'matched' });
+    models.user.belongsToMany(models.conversation, { through: 'userConversation' });
     models.user.hasOne(models.profile);
   };
   user.prototype.isValidPassword = function validPassword(typedInPassword) {

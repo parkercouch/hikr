@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
   const profile = sequelize.define('profile', {
     userId: DataTypes.INTEGER,
     displayName: DataTypes.STRING,
-    location: DataTypes.GEOMETRY,
+    location: DataTypes.GEOMETRY('POINT'),
     summary: DataTypes.TEXT,
     photo: {
       type: DataTypes.STRING,

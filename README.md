@@ -98,21 +98,30 @@ sequelize model:create --name matching --attributes userFromId:integer,userToId:
 
 ------------------------------------
 
-Matched --
-thisUserId: integer -> User.id
-thatUserId: integer -> User.id
+Conversation --
+id:pk
+name:string
+createdAt:time
 
-sequelize model:create --name matched --attributes thisUserId:integer,thatUserId:integer
+sequelize model:create --name conversation --attributes name:string
+
+------------------------------------
+
+userConversation --
+userId:integer
+conversationId:integer
+
+sequelize model:create --name userConversation --attributes userId:integer,conversationId:integer
 
 ------------------------------------
 
 Messages --
-senderId: integer -> User.id
-receiverId: integer -> User.id
+senderId:integer
+conversationId:integer
 content: text
 
 
-sequelize model:create --name message --attributes senderId:integer,reveiverId:integer,content:text
+sequelize model:create --name message --attributes senderId:integer,conversationId:integer,content:text
 
 ------------------------------------
 
@@ -120,13 +129,18 @@ Associations:
 User : Profile -- 1:1
 user.hasOne
 
-User : One-Way -- 1:M
+User : Conversation -- M:M (userConversation join table)
+user.belongsToMany through userConversation
+conversation.belongsToMany through userConversation
+
+Conversation : Message -- 1:M 
+conversation.hasMany
+
 
 User : Matched -- 1:M
 (User : User) -- M:M (through one-way, matched)
 user.belongsToMany, as: Matched, through: matched
 
-User : Messages -- 2:M (each message has 2 users, to/from) 
 
 
 ------------------------------------

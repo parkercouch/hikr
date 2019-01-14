@@ -1,4 +1,5 @@
 'use strict';
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('profiles', {
@@ -6,40 +7,40 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       userId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       displayName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       location: {
-        type: Sequelize.GEOMETRY
+        type: Sequelize.GEOMETRY('POINT'),
       },
       summary: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       photo: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       desiredPaceId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       desiredDistanceId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('profiles');
-  }
+  },
 };

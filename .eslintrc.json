@@ -6,6 +6,10 @@
     },
     "rules": {
         "func-names": ["error", "as-needed"],
-        "indent": ["error", 2]
+        "indent": ["error", 2],
+        "strict": "off",
+        "no-param-reassign": "off",
+        "no-unused-vars": "off",
+        "arrow-body-style": "off"
     }
 }
