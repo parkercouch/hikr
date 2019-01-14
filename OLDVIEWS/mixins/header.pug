@@ -1,0 +1,35 @@
+mixin navbar()
+  header
+    nav
+      .nav-wrapper.purple.lighten-2
+        a.brand-logo(href="/")
+          i.material-icons face
+          | Hikr
+        a.sidenav-trigger(href="#", data-target="mobile-demo") 
+          i.material-icons menu
+        
+        if user
+          ul.right.hide-on-med-and-down
+            li
+              a(href="/profile") Profile
+            li
+              a(href="/auth/logout") Logout
+        else
+          ul.right.hide-on-med-and-down
+            li
+              a(href="/auth/login") Login
+            li
+              a(href="/auth/signup") Sign Up
+
+    if user
+      ul#mobile-demo.sidenav
+        li
+          a(href="/profile") Profile
+        li
+          a(href="/auth/logout") Logout
+    else
+      ul#mobile-demo.sidenav
+        li
+          a(href="/auth/login") Login
+        li
+          a(href="/auth/signup") Signup

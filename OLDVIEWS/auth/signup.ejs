@@ -1,0 +1,58 @@
+<h1>SIGN UP!</h1>
+
+<div class="form-container row">
+<form action="/auth/signup" method="POST" class="col s12">
+  <div class="row">
+
+    <div class="input-field col s12">
+      <label for="username">Username</label>
+      <input class="validate" type="text" name="username" id="username" value="<%= prevData.username %>"required>
+    </div>
+
+    <div class="input-field col s12 m6">
+      <label for="password">Password</label>
+      <input class="validate" type="password" name="password" id="password" required>
+    </div>
+
+
+    <div class="input-field col s12 m6">
+      <label for="password_verify">Verify Password</label>
+      <input class="validate" type="password" name="password_verify" id="password_verify" required>
+    </div>
+
+    <div class="input-field col s12 m6">
+      <label for="firstname">First Name</label>
+      <input class="validate" type="text" name="firstname" id="firstname" value="<%= prevData.firstname %>" required>
+    </div>
+
+    <div class="input-field col s12 m6">
+      <label for="lastname">Last Name</label>
+      <input class="validate" type="text" name="lastname" id="lastname" value="<%= prevData.lastname %>" required>
+    </div>
+
+    <div class="input-field col s12 m2">
+      <label for="dob">Date of Birth</label>
+      <input class="validate datepicker" type="text" name="dob" id="dob" value="<%= prevData.dob %>" required>
+    </div>
+
+    <div class="input-field col s12 m10">
+      <label for="image">Profile Image Url</label>
+      <input class="validate" type="url" name="image" id="image" value="<%= prevData.image %>" required>
+    </div>
+
+    <div class="input-field col s12">
+      <label for="bio">Bio</label>
+      <textarea class="validate materialize-textarea" type="text" name="bio" id="bio" required><%= prevData.bio %></textarea>
+    </div>
+
+    <div class="input-field col s12">
+      <label for="email">Email</label>
+      <input class="validate" type="email" name="email" id="email" value="<%= prevData.email %> " required>
+    </div>
+
+
+    <button class="btn waves-effect waves-light col s6 offset-s3 m4 offset-m4" type="submit">Sign Up</button>
+
+    </div>
+</form>
+</div>
