@@ -1,4 +1,13 @@
 extends ../layout.pug
 
 block content
-  h1 #{user.firstName}'s profile
+  h1 Display Name: #{profile.displayName}
+  h3 Desired Pace: #{profile.desiredPace}
+  each elem in [1, 2, 4, 8]
+    if profile.desiredPace & elem
+      span ^
+    else
+      span _
+
+
+  h3 Desired Distance: #{profile.desiredDistance}

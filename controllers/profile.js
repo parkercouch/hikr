@@ -1,4 +1,5 @@
 const express = require('express');
+const db = require('../models');
 
 const router = express.Router();
 
@@ -8,7 +9,15 @@ const loggedIn = require('../middleware/loggedIn');
 // GET /profile -- show user profile
 router.get('/', loggedIn, (req, res) => {
   // res.send('Profile');
-  res.render('profile/profile');
+  db.profile.findOne({
+    where: {
+      userId: req.user.id,
+    },
+  }).then((profile) => {
+    return res.render('profile/profile', { profile });
+  }).catch((error) => {
+    return res.render('error', { error });
+  });
 });
 
 // GET /profile/edit -- show edit form for users profile
