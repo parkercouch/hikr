@@ -41,13 +41,18 @@ app.use((req, res, next) => {
 
 // ROUTES
 app.get('/', (req, res) => {
-  res.send('Home');
+  res.render('home');
+  // res.send('Home');
 });
 
 
 // CONTROLLERS
 app.use('/auth', require('./controllers/auth'));
 app.use('/profile', require('./controllers/profile'));
+app.use('/conversation', require('./controllers/conversation'));
+app.use('/user', require('./controllers/user'));
+app.use('/search', require('./controllers/search'));
+
 
 // LISTEN
 app.listen(PORT);

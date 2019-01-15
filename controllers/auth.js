@@ -7,8 +7,7 @@ const router = express.Router();
 // LOGIN
 // GET /auth/login -- show login page
 router.get('/login', (req, res) => {
-  res.send('Login Page');
-  // res.render('auth/login');
+  res.render('auth/login');
 });
 
 // POST - /auth/login -- authenticate login
@@ -32,7 +31,8 @@ router.get('/logout', (req, res) => {
 
 // Callback used in to display sign up form
 function signUpForm(req, res) {
-  res.render('auth/signup', { prevData: req.body, alerts: req.flash() });
+  res.send('Sign Up Page');
+  // res.render('auth/signup', { prevData: req.body, alerts: req.flash() });
 }
 
 // Form validation!

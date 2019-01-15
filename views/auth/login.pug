@@ -1,0 +1,23 @@
+extends ../layout.pug
+
+block alerts
+  each alert in alerts
+    p= alert
+
+block content
+  main.pa4.black-80
+    form.measure.center(action="/auth/login", method="POST")
+      fieldset#sign_up.ba.b--transparent.ph0.mh0
+        legend.f4.fw6.ph0.mh0 Sign In
+        .mt3
+          label.db.fw6.lh-copy.f(for="email-address") Email
+          input#email.pa2.input-reset.ba.bg-transparent.hover-bg-black.hover-white.w-100(type="email", name="email", required)
+        
+        .mv3
+          label.db.fw6.lh-copy.f(for="password") Password
+          input#password.pa2.input-reset.ba.bg-transparent.hover-bg-black.hover-white.w-100(type="password", name="password", required)
+      div
+        input.b.ph3.input-reset.ba.b--black.bg-transparent.grow.pointer.f6.dib(type="submit", value="Sign In")
+      
+      div.lh-copy.mt3
+        a.f6.link.dim.black.db(href="/auth/signup") Sign Up
