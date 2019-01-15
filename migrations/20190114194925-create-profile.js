@@ -16,7 +16,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
       location: {
-        type: Sequelize.GEOMETRY('POINT'),
+        type: Sequelize.STRING,
       },
       summary: {
         type: Sequelize.TEXT,
@@ -24,10 +24,10 @@ module.exports = {
       photo: {
         type: Sequelize.STRING,
       },
-      desiredPaceId: {
+      desiredPace: {
         type: Sequelize.INTEGER,
       },
-      desiredDistanceId: {
+      desiredDistance: {
         type: Sequelize.INTEGER,
       },
       createdAt: {

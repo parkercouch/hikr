@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
   const profile = sequelize.define('profile', {
     userId: DataTypes.INTEGER,
     displayName: DataTypes.STRING,
-    location: DataTypes.GEOMETRY('POINT'),
+    location: DataTypes.STRING,
     summary: DataTypes.TEXT,
     photo: {
       type: DataTypes.STRING,
@@ -12,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
         isUrl: true,
       },
     },
-    desiredPaceId: DataTypes.INTEGER,
-    desiredDistanceId: DataTypes.INTEGER,
+    desiredPace: DataTypes.INTEGER,
+    desiredDistance: DataTypes.INTEGER,
   }, {});
   profile.associate = function profileAssociations(models) {
   };

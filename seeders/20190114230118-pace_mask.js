@@ -29,10 +29,10 @@ const paces = [
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('desiredPace', paces, {});
+    return queryInterface.bulkInsert('desiredPaces', paces, {});
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('desiredPace', null, {});
+    return queryInterface.bulkDelete('desiredPaces', null, {});
   },
 };

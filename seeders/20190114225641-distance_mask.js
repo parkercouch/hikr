@@ -29,10 +29,10 @@ const distances = [
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('desiredDistance', distances, {});
+    return queryInterface.bulkInsert('desiredDistances', distances, {});
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('desiredDistance', null, {});
+    return queryInterface.bulkDelete('desiredDistances', null, {});
   },
 };
