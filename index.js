@@ -1,22 +1,27 @@
 // ENV
 require('dotenv').config();
 
-// REQUIRES
+// MODULE REQUIRES
 const express = require('express');
 const flash = require('connect-flash');
-const session = require('express-session');
 const parser = require('body-parser');
+const session = require('express-session')({
+  secret: process.env.SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true,
+});
+const sharedsession = require('express-socket.io-session');
 
-// APP
+// APP SETUP
 const app = express();
-
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
+// CUSTOM FILE REQUIRES
 const passport = require('./config/passportConfig');
 
 // DATABASE
-// const db = require('./models');
+const db = require('./models');
 
 // CONSTANTS
 const PORT = 3000;
@@ -27,11 +32,7 @@ app.set('view engine', 'pug');
 // MIDDLEWARE
 app.use(express.static(`${__dirname}/static`));
 app.use(parser.urlencoded({ extended: false }));
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: true,
-}));
+app.use(session);
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
@@ -42,6 +43,11 @@ app.use((req, res, next) => {
   res.locals.user = req.user;
   next();
 });
+
+// SOCKET.IO
+io.use(sharedsession(session, {
+  autoSave: true,
+}));
 
 // ROUTES
 app.get('/', (req, res) => {
@@ -59,8 +65,20 @@ io.on('connection', (socket) => {
   console.log('A user connected');
   socket.on('chat message', (msg) => {
     console.log(`Message: ${msg}`);
-    console.log(`User: ${socket.id}`);
-    socket.broadcast.emit('chat message', `${socket.id}: ${msg}`);
+    if (socket.handshake.session.passport) {
+      db.user.findOne({
+        where: {
+          id: socket.handshake.session.passport.user,
+        },
+        include: [db.profile],
+      }).then((foundUser) => {
+        socket.broadcast.emit('chat message', `${foundUser.profile.displayName}: ${msg}`);
+      }).catch((err) => {
+        console.log(err);
+      });
+    } else {
+      socket.broadcast.emit('chat message', `${socket.id}: ${msg}`);
+    }
   });
   socket.on('disconnect', () => {
     console.log('user disconnected');

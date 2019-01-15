@@ -62,3 +62,6 @@ typings/
 
 # temp files (vim)
 *.swp
+
+# scratchpad file for formatting copy pasta
+scratchpad.js

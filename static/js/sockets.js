@@ -4,7 +4,7 @@ console.log('sockets loaded');
 
 $(() => {
   const socket = io();
-  $('form').submit((e) => {
+  $('#message-form').submit((e) => {
     e.preventDefault();
     const message = $('#m').val();
     socket.emit('chat message', message);
