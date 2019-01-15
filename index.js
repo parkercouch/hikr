@@ -6,10 +6,14 @@ const express = require('express');
 const flash = require('connect-flash');
 const session = require('express-session');
 const parser = require('body-parser');
-const passport = require('./config/passportConfig');
 
 // APP
 const app = express();
+
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+
+const passport = require('./config/passportConfig');
 
 // DATABASE
 // const db = require('./models');
@@ -45,6 +49,24 @@ app.get('/', (req, res) => {
   // res.send('Home');
 });
 
+// TESTING SOCKETS
+
+app.get('/message', (req, res) => {
+  res.render('message');
+});
+
+io.on('connection', (socket) => {
+  console.log('A user connected');
+  socket.on('chat message', (msg) => {
+    console.log(`Message: ${msg}`);
+    console.log(`User: ${socket.id}`);
+    socket.broadcast.emit('chat message', `${socket.id}: ${msg}`);
+  });
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+});
+
 
 // CONTROLLERS
 app.use('/auth', require('./controllers/auth'));
@@ -55,4 +77,8 @@ app.use('/search', require('./controllers/search'));
 
 
 // LISTEN
-app.listen(PORT);
+// app.listen(PORT);
+// server listen so that sockets can also work on same server
+server.listen(3000, () => {
+  console.log('listening on 3000');
+});

@@ -9,6 +9,11 @@ html(lang='en')
     link(rel="stylesheet", href="https://fonts.googleapis.com/icon?family=Material+Icons")
     link(rel="stylesheet", href="/css/styles.css", type="text/css")
     link(rel="stylesheet", href="/css/tachyons.min.css", type="text/css")
+
+    script(src="/socket.io/socket.io.js")
+    script(src="https://code.jquery.com/jquery-1.11.1.js")
+    script(src="/js/sockets.js")
+
   body
     include partials/header
 
@@ -20,3 +25,4 @@ html(lang='en')
       block content
 
     script(src="/js/scripts.js")
+    block scripts
