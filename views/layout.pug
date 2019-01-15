@@ -14,8 +14,9 @@ html(lang='en')
 
     .container
       block alerts
-        p Alerts go here
+        each alert in alerts
+          p= alert
+
       block content
-        p Content goes here
 
     script(src="/js/scripts.js")

@@ -7,7 +7,8 @@ const loggedIn = require('../middleware/loggedIn');
 
 // GET /profile -- show user profile
 router.get('/', loggedIn, (req, res) => {
-  res.send('Profile');
+  // res.send('Profile');
+  res.render('profile/profile');
 });
 
 // GET /profile/edit -- show edit form for users profile

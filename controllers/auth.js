@@ -31,8 +31,8 @@ router.get('/logout', (req, res) => {
 
 // Callback used in to display sign up form
 function signUpForm(req, res) {
-  res.send('Sign Up Page');
-  // res.render('auth/signup', { prevData: req.body, alerts: req.flash() });
+  // res.send('Sign Up Page');
+  res.render('auth/signup', { prevData: req.body, alerts: req.flash() });
 }
 
 // Form validation!
@@ -43,7 +43,7 @@ function signUpValidate(req, res, next) {
   }
   db.user.findOrCreate({
     where: {
-      username: req.body.username,
+      email: req.body.email,
     },
     defaults: req.body,
   })

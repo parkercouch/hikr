@@ -1,9 +1,5 @@
 extends ../layout.pug
 
-block alerts
-  each alert in alerts
-    p= alert
-
 block content
   main.pa4.black-80
     form.measure.center(action="/auth/login", method="POST")

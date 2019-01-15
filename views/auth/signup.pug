@@ -1,0 +1,26 @@
+extends ../layout.pug
+
+block content
+  main.pa4.black-80
+    form(action="/auth/signup", method="POST")
+      fieldset#sign_up.ba.b--transparent.ph0.mh0
+        legend.ph0.mh0.fw6.clip Sign Up
+        .mt3
+          label.db.fw4.lh-copy.f6(for="email") Email
+          input#email.pa2.input-reset.ba.bg-transparent.w-100.measure(type="email", name="email", value= prevData.username, required)
+        .mt3
+          label.db.fw4.lh-copy.f6(for="firstName") First Name
+          input#firstName.pa2.input-reset.ba.bg-transparent.w-100.w-50-ns.measure(type="text", name="firstName", value= prevData.firstName, required)
+          label.db.fw4.lh-copy.f6(for="lastName") Last Name
+          input#lastName.pa2.input-reset.ba.bg-transparent.w-100.w-50-ns.measure(type="text", name="lastName", value= prevData.lastName, required)
+        .mt3
+          label.db.fw4.lh-copy.f6(for="password") Password
+          input#password.pa2.input-reset.ba.bg-transparent.w-100.w-50-ns.measure(type="password", name="password", required)
+          label.db.fw4.lh-copy.f6(for="password_verify") Verify Password
+          input#password_verify.pa2.input-reset.ba.bg-transparent.w-100.w-50-ns.measure(type="password", name="password_verify", required)
+        .mt3
+          label.db.fw4.lh-copy.f6(for="dob") Date of Birth 
+          input#dob.pa2.input-reset.ba.bg-transparent.w-100.measure(type="date", name="dob", value=prevData.dob, required)
+      
+      .mt3
+        input.b.ph3.pv2.input-reset.ba.b--black.bg-transparent.grow.pointer.f6(type="submit", value="submit")
