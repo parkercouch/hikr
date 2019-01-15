@@ -57,22 +57,19 @@ app.get('/', (req, res) => {
 
 // TESTING SOCKETS
 
-app.get('/message', (req, res) => {
-  res.render('message');
-});
-
 io.on('connection', (socket) => {
   console.log('A user connected');
   socket.on('chat message', (msg) => {
     console.log(`Message: ${msg}`);
     if (socket.handshake.session.passport) {
+      console.log(socket.handshake.session);
       db.user.findOne({
         where: {
           id: socket.handshake.session.passport.user,
         },
         include: [db.profile],
       }).then((foundUser) => {
-        socket.broadcast.emit('chat message', `${foundUser.profile.displayName}: ${msg}`);
+        socket.broadcast.emit('chat message', `${foundUser.profile.displayName}: ${socket.id}: ${msg}`);
       }).catch((err) => {
         console.log(err);
       });

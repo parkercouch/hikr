@@ -1,0 +1,11 @@
+extends ../layout.pug
+
+block content
+  h1 Messenger
+  ul#messages
+  form#chat-form(action="")
+    input#input-msg(type="text", autocomplete="off")
+    button Send
+
+block scripts
+  script(src="/js/conversation/chat.js")

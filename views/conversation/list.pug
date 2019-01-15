@@ -1,0 +1,10 @@
+extends ../layout.pug
+
+block content
+  h1 Conversation List
+  h2= user.firstName
+  .conversation-list
+  each conv in conversations
+    .conversation-carhd.ba
+      img(src= conv.users[0].profile.photo, alt="Profile Picture")
+      h2= conv.users[0].profile.displayName
