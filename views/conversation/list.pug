@@ -3,8 +3,11 @@ extends ../layout.pug
 block content
   h1 Conversation List
   h2= user.firstName
-  .conversation-list
+  .conversation-list.flex
   each conv in conversations
-    .conversation-carhd.ba
-      img(src= conv.users[0].profile.photo, alt="Profile Picture")
-      h2= conv.users[0].profile.displayName
+    .conversation-card.mw5.dib.bg-white.br3.pa3.pa4-ns.ma2.ba.b--black-10.shadow-1
+      .tc
+        img.br-100.h4.w4.dib.ba.b--black-05.pa2(src= conv.users[0].profile.photo, alt="Profile Picture")
+        h1.f3.mb2= conv.users[0].profile.displayName
+        h2.f5.fw4.gray.mt0 
+          a(href="/conversation/" + conv.id) Continue conversation...

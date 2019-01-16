@@ -52,7 +52,19 @@ router.get('/chat', loggedIn, (req, res) => {
 
 // GET /conversation/:idx -- Show specific conversation
 router.get('/:idx', loggedIn, (req, res) => {
-  res.send(`Conversation ${req.params.idx}`);
+  db.conversation.findOne({
+    where: {
+      id: req.params.idx,
+    },
+    include: [db.message],
+  }).then((conversation) => {
+    // filter sender and receiver (for easier formatting)
+    // Order by timestamp (will need to add autoscroll to bottom and limit to amount)
+    res.render('conversation/message-list', { conversation });
+  }).catch((err) => {
+    console.log(`Error: ${err}`);
+    res.render('error');
+  });
 });
 
 module.exports = router;

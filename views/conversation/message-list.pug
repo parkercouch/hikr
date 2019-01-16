@@ -1,0 +1,15 @@
+extends ../layout.pug
+
+block content
+  h1 Messenger
+  .messageLayout.w-90.ba.vh-75.overflow-hidden.center
+    .messageWrapper.w-100.vh-75.overflow-y-scroll.overflow-x-hidden.pr2
+      ul#messages
+        each message in conversation.messages
+          li.f1.mv2= message.content
+  form#chat-form(action="")
+    input#input-msg(type="text", autocomplete="off")
+    button Send
+
+block scripts
+  script(src="/js/conversation/chat.js")
