@@ -1,0 +1,15 @@
+extends ../layout.pug
+
+block content
+  h1 Find New People
+  h2 How about this person?
+  .conversation-list.flex
+    .conversation-card.mw5.dib.bg-white.br3.pa3.pa4-ns.ma2.ba.b--black-10.shadow-1
+      .tc
+        img.br-100.h4.w4.dib.ba.b--black-05.pa2(src= nextUser.photo, alt="Profile Picture")
+        h1.f3.mb2= nextUser.displayName
+        p.gray.mt0= nextUser.summary
+        .center.w-100
+          button.bg-light-red.w-50 Nope
+          button.bg-light-blue.w-50 Yep
+  
