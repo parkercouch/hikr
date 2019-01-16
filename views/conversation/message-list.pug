@@ -1,15 +1,18 @@
 extends ../layout.pug
 
 block content
-  h1 Messenger
+  h1.tc Messenges with #{contact.displayName}
   .messageLayout.w-90.ba.vh-75.overflow-hidden.center
     .messageWrapper.w-100.vh-75.overflow-y-scroll.overflow-x-hidden.pr2
       ul#messages
-        each message in conversation.messages
-          li.f1.mv2= message.content
-  form#chat-form(action="")
-    input#input-msg(type="text", autocomplete="off")
+        each msg in messages
+          li.f1.mv2.list.ba(class=msg.sent ? 'tr purple bg-light-silver' : 'tl black bg-light-yellow')= msg.content
+  form#chat-form.w-100.tc.mb3(action="")
+    input#input-msg.center.w-75.mt2(type="text", autocomplete="off")
     button Send
 
 block scripts
+  script.
+    const senderId = #{user.id};
+    const conversationId = #{convId};
   script(src="/js/conversation/chat.js")

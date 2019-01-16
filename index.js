@@ -82,6 +82,22 @@ io.on('connection', (socket) => {
   });
 });
 
+const privateChat = io.of('/chat');
+
+privateChat.on('connection', (socket) => {
+  socket.on('join private', (conversationId) => {
+    console.log('Joining private chat');
+    console.log(conversationId);
+    socket.join(`conversation${conversationId}`);
+  });
+
+  socket.on('chat message', (message) => {
+    // add to db here
+    console.log(message);
+    privateChat.to(`conversation${message.conversationId}`).emit('chat message', message);
+  });
+});
+
 
 // CONTROLLERS
 app.use('/auth', require('./controllers/auth'));

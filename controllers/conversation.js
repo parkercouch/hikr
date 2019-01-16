@@ -56,11 +56,20 @@ router.get('/:idx', loggedIn, (req, res) => {
     where: {
       id: req.params.idx,
     },
-    include: [db.message],
+    include: [db.message, { model: db.user, where: { id: { [Op.ne]: req.user.id } }, include: [db.profile] }],
   }).then((conversation) => {
     // filter sender and receiver (for easier formatting)
     // Order by timestamp (will need to add autoscroll to bottom and limit to amount)
-    res.render('conversation/message-list', { conversation });
+    const messages = conversation.messages.map((m) => {
+      return {
+        sent: (m.senderId === req.user.id),
+        content: m.content,
+        timestamp: m.createdAt,
+      };
+    });
+    const contact = conversation.users[0].profile;
+
+    res.render('conversation/message-list', { contact, messages, convId: conversation.id });
   }).catch((err) => {
     console.log(`Error: ${err}`);
     res.render('error');
