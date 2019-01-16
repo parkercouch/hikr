@@ -72,7 +72,13 @@ privateChat.on('connection', (socket) => {
     socket.join(`conversation${conversationId}`);
   });
   socket.on('chat message', (message) => {
-    // add to db here
+    db.message.build(message)
+      .save(['senderId', 'conversationId', 'content'])
+      .then((newMessage) => {
+        console.log(newMessage);
+      }).catch((err) => {
+        console.log(err);
+      });
     console.log(message);
     privateChat.to(`conversation${message.conversationId}`).emit('chat message', message);
   });
