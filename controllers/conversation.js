@@ -45,11 +45,6 @@ router.get('/', loggedIn, (req, res) => {
   });
 });
 
-// GET /conversation/chat -- TESTING SOCKET.IO CHAT
-router.get('/chat', loggedIn, (req, res) => {
-  res.render('conversation/chat');
-});
-
 // GET /conversation/:idx -- Show specific conversation
 router.get('/:idx', loggedIn, (req, res) => {
   db.conversation.findOne({
@@ -59,7 +54,7 @@ router.get('/:idx', loggedIn, (req, res) => {
     include: [db.message, { model: db.user, where: { id: { [Op.ne]: req.user.id } }, include: [db.profile] }],
   }).then((conversation) => {
     // filter sender and receiver (for easier formatting)
-    // Order by timestamp (will need to add autoscroll to bottom and limit to amount)
+    // **Order by timestamp (will need to add autoscroll to bottom and limit to amount)
     const messages = conversation.messages.map((m) => {
       return {
         sent: (m.senderId === req.user.id),
@@ -69,7 +64,7 @@ router.get('/:idx', loggedIn, (req, res) => {
     });
     const contact = conversation.users[0].profile;
 
-    res.render('conversation/message-list', { contact, messages, convId: conversation.id });
+    res.render('conversation/chat', { contact, messages, convId: conversation.id });
   }).catch((err) => {
     console.log(`Error: ${err}`);
     res.render('error');

@@ -1,27 +1,32 @@
-/* eslint-env jquery */
 /* global io, senderId, conversationId */
-console.log('sockets loaded');
 
-$(() => {
+document.addEventListener('DOMContentLoaded', (event) => {
+  // Open new socket.io connection for this conversation
   const socket = io('/chat');
-  socket.emit('join private', conversationId);
-  $('#chat-form').submit((e) => {
+  socket.emit('join conversation', conversationId);
+
+  // Grab input and send to socket.io to deal with
+  document.querySelector('#chat-form').addEventListener('submit', (e) => {
     e.preventDefault();
-    const message = {
+    const input = document.getElementById('input-msg');
+    socket.emit('chat message', {
       senderId,
-      content: $('#input-msg').val(),
+      content: input.value,
       conversationId,
-    };
-    // socket.emit('chat message', message);
-    // socket.to(`conversation#{convId}`).emit('chat message', message);
-    socket.emit('chat message', message);
-    // $('#messages').append($('<li class="red">').text(`You: ${message}`));
-    $('#input-msg').val('');
+    });
+    input.value = '';
     return false;
   });
-  socket.on('chat message', (msg) => {
-    // add classes for formatting here
-    console.log(msg);
-    $('#messages').append($('<li>').text(msg.content));
+
+  // Grab message from socket.io broadcast and format/add to list
+  socket.addEventListener('chat message', (msg) => {
+    const newMessage = document.createElement('li');
+    newMessage.textContent = msg.content;
+    if (msg.senderId === senderId) {
+      newMessage.classList.add('sent');
+    } else {
+      newMessage.classList.add('received');
+    }
+    document.getElementById('messages').appendChild(newMessage);
   });
 });

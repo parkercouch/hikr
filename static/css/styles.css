@@ -2,3 +2,16 @@
   background-color: red;
   border: 2px solid black;
 }
+
+/* UPDATE WITH TACHYONS CLASSES APPLIED */
+.sent {
+  text-align: right;
+  color: purple;
+  background-color: lightgrey;
+}
+
+.received {
+  text-align: left;
+  color: black;
+  background-color: lightyellow;
+}

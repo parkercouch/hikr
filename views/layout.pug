@@ -15,12 +15,12 @@ html(lang='en')
 
     .container
       block alerts
+        ul#alerts
         each alert in alerts
-          p= alert
+          li= alert
 
       block content
 
     script(src="/js/scripts.js")
     script(src="/socket.io/socket.io.js")
-    script(src="https://code.jquery.com/jquery-1.11.1.js")
     block scripts

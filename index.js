@@ -55,42 +55,22 @@ app.get('/', (req, res) => {
   // res.send('Home');
 });
 
-// TESTING SOCKETS
 
+// SOCKETS.IO / NAMESPACE
 io.on('connection', (socket) => {
-  console.log('A user connected');
-  socket.on('chat message', (msg) => {
-    console.log(`Message: ${msg}`);
-    if (socket.handshake.session.passport) {
-      console.log(socket.handshake.session);
-      db.user.findOne({
-        where: {
-          id: socket.handshake.session.passport.user,
-        },
-        include: [db.profile],
-      }).then((foundUser) => {
-        socket.broadcast.emit('chat message', `${foundUser.profile.displayName}: ${socket.id}: ${msg}`);
-      }).catch((err) => {
-        console.log(err);
-      });
-    } else {
-      socket.broadcast.emit('chat message', `${socket.id}: ${msg}`);
-    }
-  });
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
+  socket.on('login', (data) => {
+    console.log(data);
+    // Need to add some sort of record to allow
+    // push style notifications to user
   });
 });
 
+// SOCKET.IO /CHAT NAMESPACE
 const privateChat = io.of('/chat');
-
 privateChat.on('connection', (socket) => {
-  socket.on('join private', (conversationId) => {
-    console.log('Joining private chat');
-    console.log(conversationId);
+  socket.on('join conversation', (conversationId) => {
     socket.join(`conversation${conversationId}`);
   });
-
   socket.on('chat message', (message) => {
     // add to db here
     console.log(message);
@@ -108,8 +88,6 @@ app.use('/search', require('./controllers/search'));
 
 
 // LISTEN
-// app.listen(PORT);
-// server listen so that sockets can also work on same server
 server.listen(3000, () => {
   console.log('listening on 3000');
 });

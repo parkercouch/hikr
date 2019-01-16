@@ -1,18 +1,15 @@
-/* eslint-env jquery */
 /* global io */
-console.log('sockets loaded');
 
-$(() => {
+document.addEventListener('DOMContentLoaded', (event) => {
   const socket = io();
-  $('#message-form').submit((e) => {
-    e.preventDefault();
-    const message = $('#m').val();
-    socket.emit('chat message', message);
-    $('#messages').append($('<li class="red">').text(message));
-    $('#m').val('');
-    return false;
-  });
-  socket.on('chat message', (msg) => {
-    $('#messages').append($('<li>').text(msg));
+  // Need to send data to register user
+  const data = null;
+  socket.emit('login', data);
+
+  // Will deal with push notifications
+  socket.addEventListener('notification', (msg) => {
+    const newNotification = document.createElement('li');
+    newNotification.textContent = msg.content;
+    document.getElementById('alerts').appendChild(newNotification);
   });
 });
