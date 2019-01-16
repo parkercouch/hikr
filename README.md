@@ -144,3 +144,9 @@ user.belongsToMany, as: Matched, through: matched
 
 
 ------------------------------------
+
+script resetDB.sh will clear db and reseed with test data
+This includes 100 users (all with the same photo for now)
+and conversations/messages
+everyone's password is password
+user 11 is matching everyone but no one is matching back

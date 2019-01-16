@@ -13,9 +13,7 @@ const loggedIn = require('../middleware/loggedIn');
 router.get('/', loggedIn, (req, res) => {
   // get users conversation and link to them
   db.user.findOne({
-    where: {
-      id: req.user.id,
-    },
+    where: { id: req.user.id },
     include: [
       {
         model: db.conversation,
@@ -24,14 +22,8 @@ router.get('/', loggedIn, (req, res) => {
           {
             model: db.user,
             // as: 'Connection',
-            attributes: [
-              'id',
-            ],
-            where: {
-              id: {
-                [Op.ne]: req.user.id,
-              },
-            },
+            attributes: ['id'],
+            where: { id: { [Op.ne]: req.user.id } },
             include: [db.profile],
           },
         ],

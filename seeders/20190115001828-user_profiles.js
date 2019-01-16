@@ -2,8 +2,8 @@
 
 
 const profiles = [...Array(100)].map((_, i) => {
-  const pace = Math.floor(Math.random() * 8);
-  const distance = Math.floor(Math.random() * 8);
+  const pace = Math.ceil(Math.random() * 8);
+  const distance = Math.ceil(Math.random() * 8);
   return {
     userId: i + 1,
     displayName: `User ${i + 1}`,
