@@ -23,7 +23,9 @@ passport.use(new LocalStrategy({
     where: {
       email,
     },
+    include: [db.profile],
   }).then((foundUser) => {
+    console.log(foundUser.profile.desiredPace);
     if (foundUser && foundUser.isValidPassword(password)) {
       done(null, foundUser);
     } else {
