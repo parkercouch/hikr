@@ -36,11 +36,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
   socket.addEventListener('yep', (msg) => {
     waiting = false;
     console.log(msg);
+    window.location.reload();
   });
 
   socket.addEventListener('nope', (msg) => {
     waiting = false;
     console.log(msg);
+    window.location.reload();
   });
 
 });

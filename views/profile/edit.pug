@@ -1,0 +1,66 @@
+extends ../layout.pug
+
+block content
+  button#upload_widget.cloudinary-button Upload Photo
+  img#currentPhoto.w4.h4(src="", alt="Profile Picture")
+  form(action="/profile?_method=PUT" method="POST")
+    label(for="displayName") Display Name:
+    input(type="text", name="displayName")
+    
+    label(for="location") Location:
+    input(type="text", name="location")
+
+    label(for="desiredPace") Desired Pace:
+    input(type="checkbox", name="desiredPace", value="1") 
+    span )
+    input(type="checkbox", name="desiredPace", value="2")
+    span ))
+    input(type="checkbox", name="desiredPace", value="4")
+    span )))
+    input(type="checkbox", name="desiredPace", value="8")
+    span ))))
+
+    label(for="desiredDistance") Desired Distance:
+    input(type="checkbox", name="desiredDistance", value="1") 
+    span ^
+    input(type="checkbox", name="desiredDistance", value="2")
+    span ^^
+    input(type="checkbox", name="desiredDistance", value="4")
+    span ^^^
+    input(type="checkbox", name="desiredDistance", value="8")
+    span ^^^^
+
+
+    label(for="summary")
+    textarea#summary(name="summary", cols="30", rows="10") Share more about yourself!
+
+    input#photoUrl(type="hidden", name="photo", value="https://via.placeholder.com/500/500")
+
+    input(type="submit", value="Update!")
+
+block scripts
+  script(src="https://widget.cloudinary.com/v2.0/global/all.js")
+  script.
+    const cloudinaryWidget = cloudinary.createUploadWidget({
+      cloudName: 'deluxington', 
+      uploadPreset: 'hikr_profile_photos',
+      cropping: true,
+      croppingAspectRatio: 1,
+    }, afterUpload);
+
+    document.getElementById("upload_widget").addEventListener("click", function(){
+        cloudinaryWidget.open();
+      }, false);
+    
+    function afterUpload(error, result) {
+      console.log(error, result);
+      if (result.info.secure_url) {
+        const url = result.info.secure_url;
+        const currentPhoto = document.getElementById('currentPhoto');
+        currentPhoto.src = url;
+        const photoUrl = document.getElementById('photoUrl');
+        photoUrl.value = url;
+      }
+    }
+
+

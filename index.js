@@ -11,11 +11,21 @@ const session = require('express-session')({
   saveUninitialized: true,
 });
 const sharedsession = require('express-socket.io-session');
+const cloudinary = require('cloudinary').v2;
+const methodOverride = require('method-override');
+
 
 // APP SETUP
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
+
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 // CUSTOM FILE REQUIRES
 const passport = require('./config/passportConfig');
@@ -30,6 +40,8 @@ const PORT = 3000;
 app.set('view engine', 'pug');
 
 // MIDDLEWARE
+// override with POST having ?_method=DELETE
+app.use(methodOverride('_method'));
 app.use(express.static(`${__dirname}/static`));
 app.use(parser.urlencoded({ extended: false }));
 app.use(session);

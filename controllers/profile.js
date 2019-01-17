@@ -22,7 +22,7 @@ router.get('/', loggedIn, (req, res) => {
 
 // GET /profile/edit -- show edit form for users profile
 router.get('/edit', loggedIn, (req, res) => {
-  res.send('Profile Edit');
+  res.render('profile/edit');
 });
 
 // GET /profile/delete -- Show delete warning with text input to validate
@@ -31,9 +31,44 @@ router.get('/delete', loggedIn, (req, res) => {
 });
 
 // PUT /profile -- update users profile
-router.put('/', loggedIn, (req, res) => {
+router.put('/', loggedIn, async (req, res) => {
   // req.user.id to target specific profile
-  res.send(`Updating ${req.user.id}'s profile`);
+  const updatedProfile = req.body;
+
+  if (updatedProfile.desiredPace.length > 1) {
+    updatedProfile.desiredPace = updatedProfile.desiredPace.map(s => +s).reduce((a, b) => a + b);
+  } else {
+    updatedProfile.desiredPace = +updatedProfile.desiredPace;
+  }
+
+  if (updatedProfile.desiredDistance.length > 1) {
+    updatedProfile.desiredDistance = updatedProfile.desiredDistance.map(s => +s).reduce((a, b) => a + b);
+  } else {
+    updatedProfile.desiredDistance = +updatedProfile.desiredDistance;
+  }
+
+  // Remove all empty props so not added to db
+  Object.keys(updatedProfile).forEach((key) => {
+    if (!updatedProfile[key]) {
+      delete updatedProfile[key];
+    }
+  });
+
+
+  try {
+    await db.profile.update(
+      updatedProfile,
+      { where: { userId: req.user.id } },
+    );
+  } catch (err) {
+    req.flash('error', 'There was a problem updating your profile. Try again!');
+    console.log('******************************************************');
+    console.log('***********************ERROR**************************');
+    console.log('******************************************************');
+    console.log(err);
+  }
+
+  return res.redirect('/profile');
 });
 
 // DELETE /profile -- delete user and all their connections

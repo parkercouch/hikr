@@ -1,4 +1,5 @@
 module.exports = function isLoggedIn(req, res, next) {
+  console.log(req.user.conversations);
   if (req.user.conversations.includes(+req.params.idx)) {
     next();
   } else {
