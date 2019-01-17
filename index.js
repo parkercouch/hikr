@@ -84,6 +84,24 @@ privateChat.on('connection', (socket) => {
   });
 });
 
+// SOCKET.IO /MATCH NAMESPACE
+const match = io.of('/match');
+match.on('connection', (socket) => {
+  // socket.on('match session', (user) => {
+  //   socket.join(`conversation${conversationId}`);
+  // });
+
+  socket.on('nope', (data) => {
+    console.log(data);
+    console.log('Nope!');
+  });
+
+  socket.on('yep', (matchingUserId) => {
+    console.log(matchingUserId);
+    match.to(socket.id).emit('yep', `You matched ${matchingUserId}`);
+  });
+});
+
 
 // CONTROLLERS
 app.use('/auth', require('./controllers/auth'));

@@ -7,11 +7,13 @@ block content
     .conversation-card.mw5.dib.bg-white.br3.pa3.pa4-ns.ma2.ba.b--black-10.shadow-1
       .tc
         img.br-100.h4.w4.dib.ba.b--black-05.pa2(src= nextUser.photo, alt="Profile Picture")
-        h1.f3.mb2= nextUser.displayName
+        h1#userId.f3.mb2(data-userid= nextUser.userId)= nextUser.displayName
         h2.f4 Desired Pace: #{nextUser.desiredPace}
         h2.f4 Desired Distance: #{nextUser.desiredDistance}
         p.gray.mt0= nextUser.summary
         .center.w-100
-          button.bg-light-red.w-50 Nope
-          button.bg-light-blue.w-50 Yep
+          button#nope.bg-light-red.w-50 Nope
+          button#yep.bg-light-blue.w-50 Yep
   
+block scripts
+  script(src="/js/search/search.js")

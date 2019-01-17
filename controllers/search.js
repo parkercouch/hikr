@@ -3,9 +3,11 @@ const express = require('express');
 const router = express.Router();
 
 // DATABASE
-const db = require('../models');
-const Op = require('sequelize').Op;
 const Sequelize = require('sequelize');
+const db = require('../models');
+
+// eslint-disable-next-line prefer-destructuring
+const Op = Sequelize.Op;
 
 
 // MIDDLEWARE
@@ -13,27 +15,21 @@ const loggedIn = require('../middleware/loggedIn');
 
 // GET /search -- show user profile
 router.get('/', loggedIn, (req, res) => {
-  console.log(req.user.id);
   db.matching.findAll({
     where: {
       userFromId: req.user.id,
     },
     attributes: ['userToId'],
   }).then((matchingUsers) => {
-    console.log(matchingUsers);
     const alreadyMatching = matchingUsers.map(u => u.userToId);
     alreadyMatching.push(req.user.id);
-    const pace = 8;
-    const distance = 3;
-    console.log(alreadyMatching);
 
     db.profile.findAll({
       where: {
         [Op.and]: [
           { userId: { [Op.notIn]: alreadyMatching } },
-          Sequelize.literal(`"desiredPace" & ${pace} != 0`),
-          // WHERE "desiredPace" & 8 != 0
-          Sequelize.literal(`"desiredDistance" & ${distance} != 0`),
+          Sequelize.literal(`"desiredPace" & ${req.user.profile.desiredPace} != 0`),
+          Sequelize.literal(`"desiredDistance" & ${req.user.profile.desiredDistance} != 0`),
         ],
       },
     }).then((foundUsers) => {

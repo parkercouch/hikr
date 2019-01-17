@@ -8,7 +8,10 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  db.user.findByPk(id).then((user) => {
+  db.user.findOne({
+    where: { id },
+    include: [db.profile],
+  }).then((user) => {
     done(null, user);
   }).catch((err) => {
     done(err, null);
