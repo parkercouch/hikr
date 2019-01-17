@@ -37,4 +37,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
     waiting = false;
     console.log(msg);
   });
+
+  socket.addEventListener('nope', (msg) => {
+    waiting = false;
+    console.log(msg);
+  });
+
 });

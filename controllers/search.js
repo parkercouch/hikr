@@ -33,6 +33,12 @@ router.get('/', loggedIn, (req, res) => {
         ],
       },
     }).then((foundUsers) => {
+      if (!foundUsers.length) {
+        req.flash('error', 'No one left to search through');
+        req.flash('error', 'Talk to your current matches!');
+        res.redirect('/conversation');
+      }
+
       const nextUser = foundUsers[Math.floor(Math.random() * foundUsers.length)];
       res.render('search/search', { nextUser });
     }).catch((err) => {

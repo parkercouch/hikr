@@ -90,36 +90,52 @@ privateChat.on('connection', (socket) => {
 // SOCKET.IO /MATCH NAMESPACE
 const match = io.of('/match');
 match.on('connection', (socket) => {
-  // socket.on('match session', (user) => {
-  //   socket.join(`conversation${conversationId}`);
-  // });
-
   socket.on('nope', (data) => {
     console.log(data);
     console.log('Nope!');
+    return match.to(socket.id).emit('nope', 'See ya!');
   });
 
-  socket.on('yep', (userToId) => {
-    console.log(userToId);
-    console.log(socket.handshake.session.passport.user);
-    console.log(socket);
+  socket.on('yep', async (userToId) => {
+    try {
+      const newOneWayMatch = await db.matching.create({
+        userFromId: socket.handshake.session.passport.user,
+        userToId,
+      });
 
-    // Add match to table
-    // db.matching.create({
-    //   userFromId: socket.handshake.session.passport.user,
-    //   userToId,
-    // }).spread((newOneWayMatch) => {
-    //   console.log(`Added ${newOneWayMatch.userFromId} -> ${newOneWayMatch.userFromId}`);
-    // });
+      const twoWayMatch = await db.matching.findOne({
+        where: {
+          userFromId: userToId,
+          userToId: socket.handshake.session.passport.user,
+        },
+      });
 
-    // Check if matched back
-    //  -> send back matched message
+      if (!twoWayMatch) {
+        return match.to(socket.id).emit('nope', 'No word back');
+      }
 
-    // If not matched
-    //  -> send back waiting message
+      const newConversation = await db.conversation.create({
+        name: `Conversation between ${userToId} and ${socket.handshake.session.passport.user}`,
+      });
 
+      const newAssociations = [
+        {
+          userId: userToId,
+          conversationId: newConversation.id,
+        },
+        {
+          userId: socket.handshake.session.passport.user,
+          conversationId: newConversation.id,
+        },
+      ];
 
-    match.to(socket.id).emit('yep', `You matched ${userToId}`);
+      db.userConversation.bulkCreate(newAssociations);
+    } catch (err) {
+      console.log('************************************************');
+      console.log('*****************ERROR**************************');
+      console.log(err);
+    }
+    return match.to(socket.id).emit('yep', `You matched ${userToId}`);
   });
 });
 
