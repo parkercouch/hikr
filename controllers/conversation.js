@@ -8,6 +8,7 @@ const Op = require('sequelize').Op;
 
 // MIDDLEWARE
 const loggedIn = require('../middleware/loggedIn');
+const yourConversation = require('../middleware/yourConversation');
 
 // GET /conversation -- Show list of conversation (matched people)
 router.get('/', loggedIn, (req, res) => {
@@ -38,7 +39,7 @@ router.get('/', loggedIn, (req, res) => {
 });
 
 // GET /conversation/:idx -- Show specific conversation
-router.get('/:idx', loggedIn, (req, res) => {
+router.get('/:idx', loggedIn, yourConversation, (req, res) => {
   db.conversation.findOne({
     where: {
       id: req.params.idx,

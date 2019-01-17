@@ -48,6 +48,9 @@ app.use((req, res, next) => {
 io.use(sharedsession(session, {
   autoSave: true,
 }));
+io.of('/match').use(sharedsession(session, {
+  autoSave: true,
+}));
 
 // ROUTES
 app.get('/', (req, res) => {
@@ -96,9 +99,27 @@ match.on('connection', (socket) => {
     console.log('Nope!');
   });
 
-  socket.on('yep', (matchingUserId) => {
-    console.log(matchingUserId);
-    match.to(socket.id).emit('yep', `You matched ${matchingUserId}`);
+  socket.on('yep', (userToId) => {
+    console.log(userToId);
+    console.log(socket.handshake.session.passport.user);
+    console.log(socket);
+
+    // Add match to table
+    // db.matching.create({
+    //   userFromId: socket.handshake.session.passport.user,
+    //   userToId,
+    // }).spread((newOneWayMatch) => {
+    //   console.log(`Added ${newOneWayMatch.userFromId} -> ${newOneWayMatch.userFromId}`);
+    // });
+
+    // Check if matched back
+    //  -> send back matched message
+
+    // If not matched
+    //  -> send back waiting message
+
+
+    match.to(socket.id).emit('yep', `You matched ${userToId}`);
   });
 });
 

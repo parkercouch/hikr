@@ -10,8 +10,27 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((id, done) => {
   db.user.findOne({
     where: { id },
-    include: [db.profile],
+    include: [db.profile, {
+      model: db.conversation,
+      attributes: ['id'],
+    },
+    ],
   }).then((user) => {
+    // console.log(user.conversations);
+    user.conversations = user.conversations.map(c => c.id);
+    // console.log(user.conversations);
+    // console.log(user.profile);
+    // user.profile = user.profile.map((p) => {
+    //   return {
+    //     displayName: p.displayName,
+    //     location: p.location,
+    //     summary: p.summary,
+    //     photo: p.photo,
+    //     desiredPace: p.desiredPace,
+    //     desiredDistance: p.desiredDistance,
+    //   };
+    // });
+    // console.log(user.profile);
     done(null, user);
   }).catch((err) => {
     done(err, null);
