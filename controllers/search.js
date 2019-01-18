@@ -47,8 +47,6 @@ router.get('/', loggedIn, (req, res) => {
   }).catch((err) => {
     console.log(err);
   });
-
-
 });
 
 module.exports = router;

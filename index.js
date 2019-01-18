@@ -29,8 +29,6 @@ if (process.env.NODE_ENV === 'production') {
     resave: true,
     saveUninitialized: true,
   });
-  console.log('HEROKU REDIS');
-  console.log(session);
 } else {
   const mockRedis = require('redis-mock');
   client = mockRedis.createClient();
@@ -99,7 +97,6 @@ io.of('/match').use(sharedsession(session, {
 // ROUTES
 app.get('/', (req, res) => {
   res.render('home');
-  // res.send('Home');
 });
 
 

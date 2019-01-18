@@ -32,17 +32,18 @@ router.get('/delete', loggedIn, (req, res) => {
 
 // PUT /profile -- update users profile
 router.put('/', loggedIn, async (req, res) => {
-  // req.user.id to target specific profile
   const updatedProfile = req.body;
 
   if (updatedProfile.desiredPace.length > 1) {
-    updatedProfile.desiredPace = updatedProfile.desiredPace.map(s => +s).reduce((a, b) => a + b);
+    updatedProfile.desiredPace = updatedProfile.desiredPace
+      .map(s => +s).reduce((a, b) => a + b);
   } else {
     updatedProfile.desiredPace = +updatedProfile.desiredPace;
   }
 
   if (updatedProfile.desiredDistance.length > 1) {
-    updatedProfile.desiredDistance = updatedProfile.desiredDistance.map(s => +s).reduce((a, b) => a + b);
+    updatedProfile.desiredDistance = updatedProfile.desiredDistance
+      .map(s => +s).reduce((a, b) => a + b);
   } else {
     updatedProfile.desiredDistance = +updatedProfile.desiredDistance;
   }
@@ -54,7 +55,6 @@ router.put('/', loggedIn, async (req, res) => {
     }
   });
 
-
   try {
     await db.profile.update(
       updatedProfile,
@@ -62,9 +62,6 @@ router.put('/', loggedIn, async (req, res) => {
     );
   } catch (err) {
     req.flash('error', 'There was a problem updating your profile. Try again!');
-    console.log('******************************************************');
-    console.log('***********************ERROR**************************');
-    console.log('******************************************************');
     console.log(err);
   }
 
