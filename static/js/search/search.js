@@ -2,12 +2,10 @@
 /* global io, senderId, conversationId */
 
 document.addEventListener('DOMContentLoaded', (event) => {
-  // Open new socket.io connection for this conversation
+  const alerts = document.getElementById('alerts');
   const socket = io('/match');
   let waiting = false;
-  // socket.emit('join conversation', conversationId);
 
-  // Grab input and send to socket.io to deal with
   document.getElementById('yep').addEventListener('click', function handle(e) {
     e.preventDefault();
     // e.target.removeEventListener('click', handle);
@@ -32,16 +30,20 @@ document.addEventListener('DOMContentLoaded', (event) => {
     return false;
   });
 
-  // Grab message from socket.io broadcast and format/add to list
   socket.addEventListener('yep', (msg) => {
     waiting = false;
     console.log(msg);
-    window.location.reload();
+    const notification = document.createElement('li');
+    notification.textContent = msg;
+    alerts.appendChild(notification);
+
+    // window.location.reload();
   });
 
-  socket.addEventListener('nope', (msg) => {
+  socket.addEventListener('waiting', (msg) => {
     waiting = false;
     console.log(msg);
+    
     window.location.reload();
   });
 

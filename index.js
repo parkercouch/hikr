@@ -110,7 +110,7 @@ match.on('connection', (socket) => {
 
   socket.on('yep', async (userToId) => {
     try {
-      const newOneWayMatch = await db.matching.create({
+      await db.matching.create({
         userFromId: socket.handshake.session.passport.user,
         userToId,
       });
@@ -123,7 +123,7 @@ match.on('connection', (socket) => {
       });
 
       if (!twoWayMatch) {
-        return match.to(socket.id).emit('nope', 'No word back');
+        return match.to(socket.id).emit('waiting', 'No word back');
       }
 
       const newConversation = await db.conversation.create({
