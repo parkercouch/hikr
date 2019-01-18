@@ -65,3 +65,5 @@ typings/
 
 # scratchpad file for formatting copy pasta
 scratchpad.js
+
+*.DS_Store

@@ -13,6 +13,8 @@ const session = require('express-session')({
 const sharedsession = require('express-socket.io-session');
 const cloudinary = require('cloudinary').v2;
 const methodOverride = require('method-override');
+const path = require('path');
+const favicon = require('serve-favicon');
 
 
 // APP SETUP
@@ -42,7 +44,8 @@ app.set('view engine', 'pug');
 // MIDDLEWARE
 // override with POST having ?_method=DELETE
 app.use(methodOverride('_method'));
-app.use(express.static(`${__dirname}/static`));
+// app.use(favicon(path.join(__dirname, 'static', 'favicon.ico')));
+app.use(express.static(path.join(__dirname, 'static')));
 app.use(parser.urlencoded({ extended: false }));
 app.use(session);
 app.use(flash());
