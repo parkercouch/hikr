@@ -5,16 +5,37 @@ require('dotenv').config();
 const express = require('express');
 const flash = require('connect-flash');
 const parser = require('body-parser');
-const session = require('express-session')({
-  secret: process.env.SESSION_SECRET,
-  resave: true,
-  saveUninitialized: true,
-});
+const Session = require('express-session');
+const RedisStore = require('connect-redis')(Session);
 const sharedsession = require('express-socket.io-session');
 const cloudinary = require('cloudinary').v2;
 const methodOverride = require('method-override');
 const path = require('path');
-const favicon = require('serve-favicon');
+
+let client;
+let session;
+
+// Use redis-mock in development
+// Heroku redis in production
+if (process.env.NODE_ENV === 'production') {
+  const url = process.env.REDIS_URL;
+  session = Session({
+    store: new RedisStore({ url }),
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true,
+  });
+} else {
+  const mockRedis = require('redis-mock');
+  client = mockRedis.createClient();
+
+  session = Session({
+    store: new RedisStore({ client }),
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true,
+  });
+}
 
 
 // APP SETUP
@@ -44,10 +65,12 @@ app.set('view engine', 'pug');
 // MIDDLEWARE
 // override with POST having ?_method=DELETE
 app.use(methodOverride('_method'));
-// app.use(favicon(path.join(__dirname, 'static', 'favicon.ico')));
 app.use(express.static(path.join(__dirname, 'static')));
 app.use(parser.urlencoded({ extended: false }));
+
 app.use(session);
+
+
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
