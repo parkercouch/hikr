@@ -29,6 +29,8 @@ if (process.env.NODE_ENV === 'production') {
     resave: true,
     saveUninitialized: true,
   });
+  console.log('HEROKU REDIS');
+  console.log(session);
 } else {
   const mockRedis = require('redis-mock');
   client = mockRedis.createClient();
@@ -61,7 +63,7 @@ const passport = require('./config/passportConfig');
 const db = require('./models');
 
 // CONSTANTS
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // SETTINGS
 app.set('view engine', 'pug');
@@ -194,6 +196,6 @@ app.use('/search', require('./controllers/search'));
 
 
 // LISTEN
-server.listen(3000, () => {
-  console.log('listening on 3000');
+server.listen(PORT, () => {
+  console.log(`listening on ${PORT}`);
 });
