@@ -87,14 +87,17 @@ privateChat.on('connection', (socket) => {
     socket.join(`conversation${conversationId}`);
   });
   socket.on('chat message', (message) => {
+    // If a bad message is sent then abort!
+    if (!message.senderId || !message.content || !message.conversationId) {
+      return;
+    }
+
+    // db.message.create(message)
     db.message.build(message)
       .save(['senderId', 'conversationId', 'content'])
-      .then((newMessage) => {
-        console.log(newMessage);
-      }).catch((err) => {
+      .then().catch((err) => {
         console.log(err);
       });
-    console.log(message);
     privateChat.to(`conversation${message.conversationId}`).emit('chat message', message);
   });
 });

@@ -1,17 +1,40 @@
-.test {
-  background-color: red;
-  border: 2px solid black;
+/* Dropdown menu on nav bar */
+.dropdown:hover .dropdown-content {
+  display: block;
 }
 
-/* UPDATE WITH TACHYONS CLASSES APPLIED */
-.sent {
-  text-align: right;
-  color: purple;
-  background-color: lightgrey;
+.word-wrap {
+  word-break: break-word;
 }
 
-.received {
-  text-align: left;
-  color: black;
-  background-color: lightyellow;
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
+.mw-95 {
+  max-width: 95%;
+}
+
+.shadow-1-l {
+  box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
+}
+
+.shadow-2-l {
+  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.2);
+}
+
+.shadow-3-l {
+  box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.2);
+}
+
+.shadow-4-l {
+  box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.shadow-5-l {
+  box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.2);
 }

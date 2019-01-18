@@ -1,4 +1,8 @@
-a.f6.link.div.white.dim.mr3.mr4-ns(href="/search") Search
-a.f6.link.div.white.dim.mr3.mr4-ns(href="/conversation") Conversations
-a.f6.link.div.white.dim.mr3.mr4-ns(href="/auth/logout") Logout
-a.f6.dib.white.bg-animate.hover-bg-white.hover-black.no-underline.pv2.ph4.br-pill.ba.b--white-20(href="/profile")= user.profile.displayName
+a(href="/search", class= nav.link) Search
+a(href="/conversation", class= nav.link) Conversations
+div.dropdown.relative.dib
+  button(class= nav.dropdown_btn)= user.profile.displayName
+    div(class= nav.dropdown_hidden)
+      a(href="/profile", class= nav.dropdown_link) Profile
+      a(href="/profile/edit", class= nav.dropdown_link) Edit
+      a(href="/auth/logout", class= nav.dropdown_link) Logout

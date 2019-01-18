@@ -2,11 +2,13 @@ extends ../layout.pug
 
 block content
   h1.tc Messenges with #{contact.displayName}
-  .messageLayout.w-90.ba.vh-75.overflow-hidden.center
+  .messageLayout.w-90.ba.br3.vh-75.overflow-hidden.center
     .messageWrapper.w-100.vh-75.overflow-y-scroll.overflow-x-hidden.pr2
-      ul#messages
+      ul#messages.pr2.pl3
         each msg in messages
-          li.f1.mv2.list.ba(class=msg.sent ? 'tr purple bg-light-silver' : 'tl black bg-light-yellow')= msg.content
+          li(class=chat.msg)
+            .msg-content(class=chat.msg_content + " " + (msg.sent ? chat.sent : chat.received))= msg.content
+            div(class= chat.padding)
   form#chat-form.w-100.tc.mb3(action="")
     input#input-msg.center.w-75.mt2(type="text", autocomplete="off")
     button Send
@@ -15,4 +17,12 @@ block scripts
   script.
     const senderId = #{user.id};
     const conversationId = #{convId};
+
+    const msgStyles = {
+      message: "#{chat.msg}",
+      padding: "#{chat.padding}",
+      sent: "#{chat.sent} #{chat.msg_content}",
+      received: "#{chat.sent} #{chat.msg_content}",
+    };
+
   script(src="/js/conversation/chat.js")
