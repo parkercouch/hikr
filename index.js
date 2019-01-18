@@ -11,6 +11,7 @@ const sharedsession = require('express-socket.io-session');
 const cloudinary = require('cloudinary').v2;
 const methodOverride = require('method-override');
 const path = require('path');
+const redis = require('redis');
 
 let client;
 let session;
@@ -18,9 +19,12 @@ let session;
 // Use redis-mock in development
 // Heroku redis in production
 if (process.env.NODE_ENV === 'production') {
-  const url = process.env.REDIS_URL;
+  const herokuRedis = require('url').parse(process.env.REDIS_URL);
+  const redisDB = redis.createClient(herokuRedis.port, herokuRedis.hostname);
+  redisDB.auth(herokuRedis.auth.split(':')[1]);
+
   session = Session({
-    store: new RedisStore({ url }),
+    store: new RedisStore({ client: redisDB }),
     secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true,
