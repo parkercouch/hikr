@@ -15,6 +15,10 @@
   float: right;
 }
 
+.tiny-icon {
+  width: 10px;
+}
+
 .mw-95 {
   max-width: 95%;
 }

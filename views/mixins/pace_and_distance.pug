@@ -1,0 +1,25 @@
+mixin up_arrow
+  i.material-icons.h1.w1.pa1.ma1.ba.br2 arrow_drop_up
+
+mixin desiredDistance(num)
+  if num & 1
+    +up_arrow
+  if num & 2
+    +up_arrow
+  if num & 4
+    +up_arrow
+  if num & 8
+    +up_arrow
+
+mixin right_arrow
+  i.material-icons.h1.w1.pa1.ma1.ba.br2 arrow_right
+
+mixin desiredPace(num)
+  if num & 1
+    +right_arrow
+  if num & 2
+    +right_arrow
+  if num & 4
+    +right_arrow
+  if num & 8
+    +right_arrow

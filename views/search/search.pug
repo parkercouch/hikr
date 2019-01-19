@@ -1,4 +1,5 @@
 extends ../layout.pug
+include ../mixins/pace_and_distance.pug
 
 block content
   h1.tc Find New People
@@ -12,8 +13,10 @@ block content
         h1.db.row.w-100.pv2-ns.ma0.tc= nextUser.displayName 
         h2.db.row.w-100.pv1-ns.ma0.tc= nextUser.location
     .row
-      .col.fl.pt2.w-50.h2.tc= nextUser.desiredPace
-      .col.fl.pt2.w-50.h2.tc= nextUser.desiredDistance
+      .col.fl.w-50.h2.flex.justify-center
+        +desiredPace(nextUser.desiredPace)
+      .col.fl.w-50.h2.flex.justify-center
+        +desiredDistance(nextUser.desiredDistance)
     .row.h5
       p.db.col.fl.pa1.w-100.h-100.ba.br2.ma0.overflow-scroll= nextUser.summary
     .row.flex.justify-around
