@@ -43,8 +43,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
   socket.addEventListener('waiting', (msg) => {
     waiting = false;
     console.log(msg);
-    
     window.location.reload();
   });
-
 });
