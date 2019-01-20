@@ -47,20 +47,18 @@ function signUpValidate(req, res, next) {
     },
     defaults: req.body,
   })
-    .spread((user, wasCreated) => {
+    .spread((newUser, wasCreated) => {
       if (wasCreated) {
         passport.authenticate('local', {
-          successFlash: 'Welcome Home',
-          successRedirect: '/profile',
+          successFlash: 'Welcome! Time to make your profile.',
+          successRedirect: '/profile/edit',
           failureFlash: 'Invalid Credentials',
           failureRedirect: '/auth/login',
-        })(req, res, () => {
-          req.flash('success', 'Yay! You have conformed to our standards');
-          return res.redirect('/profile');
-        });
+        })(req, res, next);
+      } else {
+        req.flash('error', 'That email is already in use!');
+        return next();
       }
-      req.flash('error', 'You aren\'t unique. That username is already in use.');
-      return res.redirect('/auth/signup');
     })
     .catch((err) => {
       if (err.errors) {
@@ -77,8 +75,6 @@ function signUpValidate(req, res, next) {
       req.flash('error', 'A server error occured. Please try again. Or don\'t...');
       return res.render('error');
     });
-  // WILL THIS BREAK THIS?
-  return 0;
 }
 
 // SIGNUP //

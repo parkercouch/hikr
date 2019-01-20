@@ -5,21 +5,22 @@ block content
   h1.tc Your profile!
   h3.tc This is how other people see you
 
-  .user-card-container.w-75-ns.w-95.vh-90.pa2.center.mb4.br2.shadow-1.flex.flex-column.justify-around
-    .row.flex.flex-column
-      .col.fl.w-50.pa2.center
-        img.img.br2(src= profile.photo, alt= profile.displayName + "'s profile photo")
-      .col.fl.w-50-ns
-        h1.db.row.w-100.pv2-ns.ma0.tc= profile.displayName 
-        h2.db.row.w-100.pv1-ns.ma0.tc= profile.location
-    .row
-      .col.fl.w-50.h2.flex.justify-center
-        +desiredPace(profile.desiredPace)
-      .col.fl.w-50.h2.flex.justify-center
-        +desiredDistance(profile.desiredDistance)
-    .row.h5
-      p.db.col.fl.pa1.w-100.h-100.ba.br2.ma0.overflow-scroll= profile.summary
-    .row.flex.justify-around
-      button.col.fl.w-33.h2.h3-ns.bg-light-green.f3.br2
-        a.link.black(href="/profile/edit") Edit
+  if profile != null
+    .user-card-container.w-75-ns.w-95.vh-90.pa2.center.mb4.br2.shadow-1.flex.flex-column.justify-around
+      .row.flex.flex-column
+        .col.fl.w-50.pa2.center
+          img.img.br2(src= profile.photo, alt= profile.displayName + "'s profile photo")
+        .col.fl.w-50-ns
+          h1.db.row.w-100.pv2-ns.ma0.tc= profile.displayName 
+          h2.db.row.w-100.pv1-ns.ma0.tc= profile.location
+      .row
+        .col.fl.w-50.h2.flex.justify-center
+          +desiredPace(profile.desiredPace)
+        .col.fl.w-50.h2.flex.justify-center
+          +desiredDistance(profile.desiredDistance)
+      .row.h5
+        p.db.col.fl.pa1.w-100.h-100.ba.br2.ma0.overflow-scroll= profile.summary
+      .row.flex.justify-around
+        button.col.fl.w-33.h2.h3-ns.bg-light-green.f3.br2
+          a.link.black(href="/profile/edit") Edit
   

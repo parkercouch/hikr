@@ -1,7 +1,11 @@
-a(href="/search", class= nav.link) Search
-a(href="/conversation", class= nav.link) Conversations
+- const name = user.profile ? user.profile.displayName : 'You';
+
+a(href="/search", class= nav.link)
+  i(class= nav.icon) search
+a(href="/conversation", class= nav.link)
+  i(class= nav.icon) messages
 div.dropdown.relative.dib
-  button(class= nav.dropdown_btn)= user.profile.displayName
+  button(class= nav.dropdown_btn)= name
     div(class= nav.dropdown_hidden)
       a(href="/profile", class= nav.dropdown_link) Profile
       a(href="/profile/edit", class= nav.dropdown_link) Edit
