@@ -19,9 +19,9 @@ html(lang='en')
   body
     include partials/header
 
-    .container
+    .container.vw-100.vh-100.m0.p0.bg-forest
       block alerts
-        ul#alerts
+        ul#alerts.absolute
         each alert in alerts
           li= alert
 

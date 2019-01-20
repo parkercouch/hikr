@@ -1,0 +1,46 @@
+include partials/components
+include mixins/logo
+
+doctype
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    meta(name="X-UA-Compatible" content="ie=edge")
+    title Hikr
+
+    //- link(rel="icon", href="/favicon.ico")
+
+    link(rel="stylesheet", href="https://fonts.googleapis.com/icon?family=Material+Icons")
+    link(rel="stylesheet", href="/css/styles.css", type="text/css")
+    link(rel="stylesheet", href="/css/tachyons.min.css", type="text/css")
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css")
+
+
+  body
+    main.athelas
+      .bg-forest.vh-100.w-100.bg-dark-grey.white.flex.flex-column.justify-around.items-center
+        header.w-100.flex.flex-column.justify-center.items-center
+          a.dib.tc.w-90.w8-ns.white.hover-lightest-blue.no-underline.grow(href="#about")
+            +hikr_logo
+            h2.f6.fw2.ttu.tracked.lh-title Connecting Adventurers
+        section.w-100.flex.flex-column.items-center
+          a.mv1.w-75.w5-ns.ba(href="/auth/login", class= button.primary) Login
+          a.mv5.w-60.w4-ns.ba(href="/auth/signup", class= button.secondary) Sign Up
+
+      <div class="center measure-wide f5 pv5 lh-copy ph2">
+        a(name="about")
+        <h1 class="f1 lh-title">Who is this for?</h1>
+        <p> Anyone and everyone who likes the outdoors</p>
+        <p> Those who want to meet new people</p>
+        <p> Those looking for locals to show them the best spots</p>
+      </div>
+    </article>
+
+    script(src="/js/scripts.js")
+    script(src="/socket.io/socket.io.js")
+    block scripts
+
+
+
+

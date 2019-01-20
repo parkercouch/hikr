@@ -96,7 +96,7 @@ io.of('/match').use(sharedsession(session, {
 
 // ROUTES
 app.get('/', (req, res) => {
-  res.render('home');
+  res.render('landing');
 });
 
 

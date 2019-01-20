@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 /* Dropdown menu on nav bar */
 .dropdown:hover .dropdown-content {
   display: block;
@@ -31,22 +35,26 @@
   height: 90vh;
 }
 
-.shadow-1-l {
-  box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.2);
+.bg-forest {
+  background-image: url('../images/trees.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 
-.shadow-2-l {
-  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.2);
+.bg-mountain {
+  background-image: url('../images/mountain_bg.png');
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 
-.shadow-3-l {
-  box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.2);
+.bg-muted {
+  background-color: rgba(53, 39, 31, 1);
 }
 
-.shadow-4-l {
-  box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.2);
-}
-
-.shadow-5-l {
-  box-shadow: 4px 4px 8px 0 rgba(0, 0, 0, 0.2);
+@media screen and (min-width: 30em) {
+  .w8-ns {
+    width: 30rem !important;
+  }
 }
