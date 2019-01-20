@@ -1,19 +1,17 @@
 extends ../layout.pug
 
 block content
-  main.pa4.black-80
-    form.measure.center(action="/auth/login", method="POST")
+  main.ph2.pv1.pa4-ns.black-80
+    form.measure.center.mt3.vh-50.bg-white.ph5-ns.ph2.pv5.br2.shadow-3(action="/auth/login", method="POST")
       fieldset#sign_up.ba.b--transparent.ph0.mh0
-        legend.f4.fw6.ph0.mh0 Sign In
+        legend.tc.f4.fw6.ph0.mh0 Please login to continue
         .mt3
-          label.db.fw6.lh-copy.f(for="email-address") Email
-          input#email.pa2.input-reset.ba.bg-transparent.hover-bg-black.hover-white.w-100(type="email", name="email", value="me1@email.com", required)
+          label.mb1.db.fw6.lh-copy.f(for="email-address") Email:
+          input#email.pa2.input-reset.ba.br2.bg-transparent.hover-bg-washed-blue.w-100(type="email", name="email", value="me1@email.com", required)
         
         .mv3
-          label.db.fw6.lh-copy.f(for="password") Password
-          input#password.pa2.input-reset.ba.bg-transparent.hover-bg-black.hover-white.w-100(type="password", name="password", value="password" required)
-      div
-        input.b.ph3.input-reset.ba.b--black.bg-transparent.grow.pointer.f6.dib(type="submit", value="Sign In")
+          label.mb1.db.fw6.lh-copy.f(for="password") Password:
+          input#password.pa2.input-reset.ba.br2.bg-transparent.hover-bg-washed-blue.w-100(type="password", name="password", value="password" required)
+      div.tc
+        input.w4.mt5(type="submit", value="Login" class= button.secondary)
       
-      div.lh-copy.mt3
-        a.f6.link.dim.black.db(href="/auth/signup") Sign Up
