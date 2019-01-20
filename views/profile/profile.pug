@@ -2,11 +2,8 @@ extends ../layout.pug
 include ../mixins/pace_and_distance.pug
 
 block content
-  h1.tc Your profile!
-  h3.tc This is how other people see you
-
   if profile != null
-    .user-card-container.w-75-ns.w-95.vh-90.pa2.center.mb4.br2.shadow-1.flex.flex-column.justify-around
+    .user-card-container.bg-white.w-75-ns.w-95.vh-90.pa2.center.mb4.br2.shadow-1.flex.flex-column.justify-around
       .row.flex.flex-column
         .col.fl.w-50.pa2.center
           img.img.br2(src= profile.photo, alt= profile.displayName + "'s profile photo")

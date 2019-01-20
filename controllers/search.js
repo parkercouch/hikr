@@ -40,7 +40,8 @@ router.get('/', loggedIn, (req, res) => {
       }
 
       const nextUser = foundUsers[Math.floor(Math.random() * foundUsers.length)];
-      res.render('search/search', { nextUser });
+      req.flash('success', 'Here are some new people!');
+      res.render('search/search', { nextUser, alerts: req.flash() });
     }).catch((err) => {
       console.log(err);
     });
