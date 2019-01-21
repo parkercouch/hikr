@@ -53,8 +53,16 @@ html {
   background-color: rgba(53, 39, 31, 1);
 }
 
+.lh-h2 {
+  line-height: 2rem;
+}
+
 @media screen and (min-width: 30em) {
   .w8-ns {
     width: 30rem !important;
+  }
+
+  .lh-h3-ns {
+    line-height: 4rem;
   }
 }
