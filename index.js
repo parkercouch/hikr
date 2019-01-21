@@ -142,11 +142,13 @@ match.on('connection', (socket) => {
 
   socket.on('yep', async (userToId) => {
     try {
+      // Create a one way match
       await db.matching.create({
         userFromId: socket.handshake.session.passport.user,
         userToId,
       });
 
+      // Check if the other user is matching back
       const twoWayMatch = await db.matching.findOne({
         where: {
           userFromId: userToId,
@@ -175,8 +177,6 @@ match.on('connection', (socket) => {
 
       db.userConversation.bulkCreate(newAssociations);
     } catch (err) {
-      console.log('************************************************');
-      console.log('*****************ERROR**************************');
       console.log(err);
     }
     return match.to(socket.id).emit('yep', `You matched ${userToId}`);
