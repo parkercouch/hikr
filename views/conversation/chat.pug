@@ -1,17 +1,19 @@
 extends ../layout.pug
 
 block content
-  h1.tc Messenges with #{contact.displayName}
-  .messageLayout.w-90.ba.br3.vh-75.overflow-hidden.center
+  div.pa2.measure.center.flex.items-center.justify-center
+    img.img.br2.h3.w3.dib(src= contact.photo)
+    h1.mr2= contact.displayName
+  .messageLayout.w-95.w8-ns.br3.vh-75.overflow-hidden.center.bg-white.shadow-2
     .messageWrapper.w-100.vh-75.overflow-y-scroll.overflow-x-hidden.pr2
       ul#messages.pr2.pl3
         each msg in messages
           li(class=chat.msg)
             .msg-content(class=chat.msg_content + " " + (msg.sent ? chat.sent : chat.received))= msg.content
             div(class= chat.padding)
-  form#chat-form.w-100.tc.mb3(action="")
-    input#input-msg.center.w-75.mt2(type="text", autocomplete="off")
-    button Send
+  form#chat-form.w-95.w8-ns.center.mt2.mb3.flex.items-center.justify-between.ph2-ns(action="")
+    textarea#input-msg.mw-95.h2.pt1.br2.shadow-2(cols="48")
+    input.w2.w3-ns.self-start(class= button.secondary, type="submit", value="▶")
 
 block scripts
   script.
@@ -25,4 +27,5 @@ block scripts
       received: "#{chat.sent} #{chat.msg_content}",
     };
 
+  script(src="/js/autosize.min.js")
   script(src="/js/conversation/chat.js")
