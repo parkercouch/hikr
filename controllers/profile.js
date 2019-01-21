@@ -21,8 +21,8 @@ router.get('/', loggedIn, (req, res) => {
 });
 
 // GET /profile/edit -- show edit form for users profile
-router.get('/edit', loggedIn, (req, res) => {
-  res.render('profile/edit');
+router.get('/edit', loggedIn, async (req, res) => {
+  res.render('profile/edit', { profile: req.user.profile });
 });
 
 // GET /profile/delete -- Show delete warning with text input to validate
@@ -33,19 +33,23 @@ router.get('/delete', loggedIn, (req, res) => {
 // PUT /profile -- update users profile
 router.put('/', loggedIn, async (req, res) => {
   const updatedProfile = req.body;
-
-  if (updatedProfile.desiredPace.length > 1) {
-    updatedProfile.desiredPace = updatedProfile.desiredPace
-      .map(s => +s).reduce((a, b) => a + b);
-  } else {
-    updatedProfile.desiredPace = +updatedProfile.desiredPace;
+  
+  if (updatedProfile.desiredPace) {
+    if (updatedProfile.desiredPace.length > 1) {
+      updatedProfile.desiredPace = updatedProfile.desiredPace
+        .map(s => +s).reduce((a, b) => a + b);
+    } else {
+      updatedProfile.desiredPace = +updatedProfile.desiredPace;
+    }
   }
 
-  if (updatedProfile.desiredDistance.length > 1) {
-    updatedProfile.desiredDistance = updatedProfile.desiredDistance
-      .map(s => +s).reduce((a, b) => a + b);
-  } else {
-    updatedProfile.desiredDistance = +updatedProfile.desiredDistance;
+  if (updatedProfile.desiredDistance) {
+    if (updatedProfile.desiredDistance.length > 1) {
+      updatedProfile.desiredDistance = updatedProfile.desiredDistance
+        .map(s => +s).reduce((a, b) => a + b);
+    } else {
+      updatedProfile.desiredDistance = +updatedProfile.desiredDistance;
+    }
   }
 
   // Remove all empty props so not added to db

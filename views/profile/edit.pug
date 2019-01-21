@@ -1,42 +1,63 @@
 extends ../layout.pug
+include ../mixins/pace_and_distance.pug
 
 block content
-  button#upload_widget.cloudinary-button Upload Photo
-  img#currentPhoto.w4.h4(src="", alt="Profile Picture")
-  form(action="/profile?_method=PUT" method="POST")
+  form.user-card-container.bg-white.w-75-ns.w-95.vh-90.pa2.center.mb4.br2.shadow-1.flex.flex-column.justify-around(action="/profile?_method=PUT" method="POST")
+    img#currentPhoto.w4.h4(src= profile.photo, alt="Profile Picture")
+    #upload_widget.w5.h2.pointer(class= button.secondary) Upload New Photo
+
     label(for="displayName") Display Name:
-    input(type="text", name="displayName")
+    input.w-95(type="text", name="displayName", value= profile.displayName)
     
     label(for="location") Location:
-    input(type="text", name="location")
+    input.w-95(type="text", name="location", value= profile.location)
 
-    label(for="desiredPace") Desired Pace:
-    input(type="checkbox", name="desiredPace", value="1") 
-    span )
-    input(type="checkbox", name="desiredPace", value="2")
-    span ))
-    input(type="checkbox", name="desiredPace", value="4")
-    span )))
-    input(type="checkbox", name="desiredPace", value="8")
-    span ))))
+    label.f4(for="desiredPace") Desired Paces 
+      span.f6 (Check all that apply):
+    .w-100.center.flex.flex-row.justify-center.items-center
+      .flex.flex-column.justify-center.items-center.w4
+        h4.f5.ma0 Leisurely
+        +desiredPace(1)
+        input(type="checkbox", name="desiredPace", value="1", checked= !!(profile.desiredPace & 1)) 
+      .flex.flex-column.justify-center.items-center.w4
+        h4.f5.ma0 Casual 
+        +desiredPace(2)
+        input(type="checkbox", name="desiredPace", value="2", checked= !!(profile.desiredPace & 2))
+      .flex.flex-column.justify-center.items-center.w4
+        h4.f5.ma0 Brisk
+        +desiredPace(4)
+        input(type="checkbox", name="desiredPace", value="4", checked= !!(profile.desiredPace & 4))
+      .flex.flex-column.justify-center.items-center.w4
+        h4.f5.ma0 Running
+        +desiredPace(8)
+        input(type="checkbox", name="desiredPace", value="8", checked= !!(profile.desiredPace & 8))
 
-    label(for="desiredDistance") Desired Distance:
-    input(type="checkbox", name="desiredDistance", value="1") 
-    span ^
-    input(type="checkbox", name="desiredDistance", value="2")
-    span ^^
-    input(type="checkbox", name="desiredDistance", value="4")
-    span ^^^
-    input(type="checkbox", name="desiredDistance", value="8")
-    span ^^^^
+    label.f4(for="desiredDistance") Desired Distances 
+      span.f6 (Check all that apply):
+    .w-100.center.flex.flex-row.justify-center.items-center
+      .flex.flex-column.justify-center.items-center.w4
+        h4.f6.ma0 Short (<5mi)
+        +desiredDistance(1)
+        input(type="checkbox", name="desiredDistance", value="1", checked= !!(profile.desiredDistance & 1)) 
+      .flex.flex-column.justify-center.items-center.w4
+        h4.f6.ma0 Mid (6-15 mi)
+        +desiredDistance(2)
+        input(type="checkbox", name="desiredDistance", value="2", checked= !!(profile.desiredDistance & 2))
+      .flex.flex-column.justify-center.items-center.w4
+        h4.f6.ma0 Long (16+ mi)
+        +desiredDistance(4)
+        input(type="checkbox", name="desiredDistance", value="4", checked= !!(profile.desiredDistance & 4))
+      .flex.flex-column.justify-center.items-center.w4
+        h4.f6.ma0 Multi-Day
+        +desiredDistance(8)
+        input(type="checkbox", name="desiredDistance", value="8", checked= !!(profile.desiredDistance & 8))
 
+    label(for="summary") A short blurb about yourself:
+    textarea#summary.w-95(name="summary", cols="30", rows="10")= profile.summary 
 
-    label(for="summary")
-    textarea#summary(name="summary", cols="30", rows="10") Share more about yourself!
+    input#photoUrl(type="hidden", name="photo", value= profile.photo)
 
-    input#photoUrl(type="hidden", name="photo", value="https://via.placeholder.com/500/500")
-
-    input(type="submit", value="Update!")
+    input.w4.center(class= button.primary, type="submit", value="Update")
 
 block scripts
   script(src="https://widget.cloudinary.com/v2.0/global/all.js")
