@@ -35,6 +35,14 @@ html {
   height: 90vh;
 }
 
+.min-vh-90 {
+  min-height: 90vh;
+}
+
+.force-to-top {
+  margin-bottom: auto;
+}
+
 .bg-forest {
   background-image: url('../images/trees.jpg');
   background-size: cover;

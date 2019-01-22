@@ -2,21 +2,21 @@ extends ../layout.pug
 include ../mixins/pace_and_distance.pug
 
 block content
-  .user-card-container.bg-white.w-75-ns.w-95.vh-90.pa2.center.mb4.br2.shadow-1.flex.flex-column.justify-around
-    .row.flex.flex-column
-      .col.fl.w-50.pa2.center
+  .user-card-container.bg-white.w8-ns.w-95.pa0.center.mb4.br2.shadow-1.flex.flex-column.justify-around
+    .row.flex.flex-column.force-top-top.mb3
+      .col.fl.w-100
         img.img.br2(src= nextUser.photo, alt= nextUser.displayName + "'s profile photo")
-      .col.fl.w-50-ns
+      .col.fl
         h1#userId.db.row.w-100.pv2-ns.ma0.tc(data-userid= nextUser.id)= nextUser.displayName 
         h2.db.row.w-100.pv1-ns.ma0.tc= nextUser.location
-    .row
+    .row.mb3.ph2
       .col.fl.w-50.h2.flex.justify-center
         +desiredPace(nextUser.desiredPace)
       .col.fl.w-50.h2.flex.justify-center
         +desiredDistance(nextUser.desiredDistance)
-    .row.h5
+    .row.h5.mb3.ph2
       p.db.col.fl.pa1.w-100.h-100.ba.br2.ma0.overflow-scroll= nextUser.summary
-    .row.flex.justify-around
+    .row.flex.justify-around.mb3
       button#nope.col.fl.w-33.h2.h3-ns.bg-light-red.f3.br2 Nope
       button#yep.col.fl.w-33.h2.h3-ns.bg-light-green.f3.br2 Yep
   

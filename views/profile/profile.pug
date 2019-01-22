@@ -3,20 +3,20 @@ include ../mixins/pace_and_distance.pug
 
 block content
   if profile != null
-    .user-card-container.bg-white.w-75-ns.w-95.vh-90.pa2.center.mb4.br2.shadow-1.flex.flex-column.justify-around
-      .row.flex.flex-column
-        .col.fl.w-50.pa2.center
-          img.img.br2(src= profile.photo, alt= profile.displayName + "'s profile photo")
-        .col.fl.w-50-ns
+    .user-card-container.bg-white.w8-ns.w-95.pa0.center.mb4.br2.shadow-1.flex.flex-column.justify-around
+      .row.flex.flex-column.force-to-top.mb3
+        .col.fl.w-100
+          img.img.br2.br--top(src= profile.photo, alt= profile.displayName + "'s profile photo")
+        .col.fl
           h1.db.row.w-100.pv2-ns.ma0.tc= profile.displayName 
           h2.db.row.w-100.pv1-ns.ma0.tc= profile.location
-      .row
+      .row.mb3.ph2
         .col.fl.w-50.h2.flex.justify-center
           +desiredPace(profile.desiredPace)
         .col.fl.w-50.h2.flex.justify-center
           +desiredDistance(profile.desiredDistance)
-      .row.h5
+      .row.h5.mb3.ph2
         p.db.col.fl.pa1.w-100.h-100.ba.br2.ma0.overflow-scroll= profile.summary
-      .row.flex.justify-around
+      .row.flex.justify-around.mb3
         a.tc.fl.w-33.h2.h3-ns.lh-h2.lh-h3-ns.bg-light-green.f3.br2.no-underline.grow.black(href="/profile/edit") Edit
   
