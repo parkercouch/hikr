@@ -1,17 +1,36 @@
 # hikr
 Tindr style app for hiking buddies
 
-### Ideas
+## Deployed Link
+[https://hikr-app.herokuapp.com/](https://hikr-app.herokuapp.com/)
 
 
+## Wireframes
+![wireframe](https://res.cloudinary.com/deluxington/image/upload/a_270/v1548176905/Hikr/IMG_0698.jpg "Wireframe 1")
+![wireframe](https://res.cloudinary.com/deluxington/image/upload/a_270/v1548176905/Hikr/IMG_0697.jpg "Wireframe 2")
+![wireframe](https://res.cloudinary.com/deluxington/image/upload/a_0/v1548176905/Hikr/IMG_0699.jpg "Wireframe 3")
+![wireframe](https://res.cloudinary.com/deluxington/image/upload/a_270/v1548176905/Hikr/IMG_0696.jpg "Wireframe 4")
 
-User Stories:
+## How to install
+* git clone
+* npm install
+* Add .env with SESSION_SECRET, MAPBOX_TOKEN, and CLOUDINARY items (if using node cloudinary module)
+* Update DB config to link to local Postgres
+* Run ./utils/resetDB.sh to migrate and seed with test data
+
+
+####User Stories:
 --Overall goals--
 I am a hiker who is new to the area and want to find people to show me local trails.
 
 As a user searching for a new hiking buddy, I want to see people close to me
 
 As a experienced hiker, I want to find other people that want to do long hikes
+
+As a user who is done using the site, I want to be able to delete my account.
+
+As a user who is no longer interested in talking with another user, I want to be able to
+un-match them.
 
 
 Basic pages and elements:
@@ -34,7 +53,7 @@ Search Hikes/Fave -- Search a list of local hikes (with hikingproject.com) and a
 
 
 
-Database Schema:
+## Database Schema:
 
 User --
 firstName:string
