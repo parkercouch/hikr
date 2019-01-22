@@ -17,7 +17,9 @@ passport.deserializeUser((id, done) => {
     ],
   }).then((user) => {
     // ? This probably should only happen when going to certain pages instead of all
-    user.conversations = user.conversations.map(c => c.id);
+    if (user) {
+      user.conversations = user.conversations.map(c => c.id);
+    }
     done(null, user);
   }).catch((err) => {
     done(err, null);
