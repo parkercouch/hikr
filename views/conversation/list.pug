@@ -3,8 +3,8 @@ extends ../layout.pug
 block content
   .conversation-list.flex.flex-wrap.justify-center.items-center
     each conv in conversations
-      .conversation-card.mw5.dib.bg-white.br2.pa3.pa4-ns.ma2.shadow-2.grow
+      .conversation-card.dib.bg-white.w5.br2.ma2.shadow-2.grow
         a.black.no-underline(href="/conversation/" + conv.id)
           .tc
-            img.br2.h4.w4.dib(src= conv.users[0].profile.photo, alt="Profile Picture")
-            h1.f3.mb2= conv.users[0].profile.displayName
+            img.br2.dib(src= conv.users[0].profile.photo, alt="Profile Picture")
+            h1.f3.mb3= conv.users[0].profile.displayName

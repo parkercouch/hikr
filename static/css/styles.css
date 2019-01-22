@@ -65,6 +65,12 @@ html {
   line-height: 2rem;
 }
 
+.hidden {
+  position: absolute;
+  display: none;
+  visibility: hidden;
+}
+
 @media screen and (min-width: 30em) {
   .w8-ns {
     width: 30rem !important;
