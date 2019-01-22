@@ -1,20 +1,17 @@
 # hikr
-Tinder for hiking buddies
-
-# PROJECT2
-Initial repo for project 2
+Tindr style app for hiking buddies
 
 ### Ideas
 
-Find an adventure buddy
-(Tinder for hikers?)
 
 
 User Stories:
 --Overall goals--
 I am a hiker who is new to the area and want to find people to show me local trails.
 
-As a user searching for a new hiking buddy, I want to see what
+As a user searching for a new hiking buddy, I want to see people close to me
+
+As a experienced hiker, I want to find other people that want to do long hikes
 
 
 Basic pages and elements:
@@ -37,7 +34,7 @@ Search Hikes/Fave -- Search a list of local hikes (with hikingproject.com) and a
 
 
 
-Database Schema Ideas:
+Database Schema:
 
 User --
 firstName:string
@@ -46,21 +43,17 @@ email:string \[validated and unique\]
 password:string (hashed) \[8-24\]
 dob:date \[over 18\]
 
-sequelize model:create --name user --attributes firstName:string,lastName:string,email:string,password:string,dob:date
-
 ------------------------------------
 
 Profile --
-userId: integer -> User.id
-displayName: string
-location: point? (long, lat) (x, y) type: Sequelize.GEOMETRY('POINT'),
-summary: text
-photo: string
-desiredPaceId: integer
-desiredDistanceId: integer
-
-
-sequelize model:create --name profile --attributes userId:integer,displayName:string,location:geometry,summary:text,photo:string,desiredPaceId:integer,desiredDistanceId:integer
+userId: Integer (Foreign Key)
+displayName: String
+location: PostGIS GEOGRAPHY POINT
+displayLocation: String
+summary: Text
+photo: String (url of uploaded photo)
+desiredPaceId: integer (bitmask)
+desiredDistanceId: integer (bitmask)
 
 ------------------------------------
 
@@ -73,8 +66,6 @@ name:string
 4 - Brisk
 8 - Running
 
-sequelize model:create --name desiredPace --attributes name:string
-
 ------------------------------------
 
 DesiredDistance --
@@ -86,67 +77,88 @@ name:string
 3 - Long (16+)
 4 - Multi-Day
 
-sequelize model:create --name desiredDistance --attributes name:string
-
 ------------------------------------
 
 One-Way-Matching --
 userFromId: integer -> User.id
 userToId: integer -> User.id
 
-sequelize model:create --name matching --attributes userFromId:integer,userToId:integer
-
 ------------------------------------
 
 Conversation --
-id:pk
 name:string
-createdAt:time
-
-sequelize model:create --name conversation --attributes name:string
 
 ------------------------------------
 
-userConversation --
-userId:integer
-conversationId:integer
-
-sequelize model:create --name userConversation --attributes userId:integer,conversationId:integer
+userConversation (Join Table) --
+userId: Integer
+conversationId: Integer
 
 ------------------------------------
 
 Messages --
-senderId:integer
-conversationId:integer
-content: text
-
-
-sequelize model:create --name message --attributes senderId:integer,conversationId:integer,content:text
+senderId: Integer
+conversationId: Integer
+content: Text
 
 ------------------------------------
 
 Associations:
 User : Profile -- 1:1
-user.hasOne
 
 User : Conversation -- M:M (userConversation join table)
-user.belongsToMany through userConversation
-conversation.belongsToMany through userConversation
 
 Conversation : Message -- 1:M 
-conversation.hasMany
 
-
-User : Matched -- 1:M
-(User : User) -- M:M (through one-way, matched)
-user.belongsToMany, as: Matched, through: matched
-
-
+User : User -- M:M (matching join table)
+One directional
 
 ------------------------------------
 
 script resetDB.sh will clear db and reseed with test data
-This includes 100 users (all with the same photo for now)
+This includes 100 users (with not creative but usable data)
 and conversations/messages
 everyone's password is password
 user 11 is matching everyone but no one is matching back
+
+## Routes
+| route | method | description |
+|:------|:------:|------------:|
+| / | GET | Landing Page |
+| /auth/login | GET | Login Page |
+| /auth/login | POST | Authenticate User |
+| /auth/logout | GET | Logs user out. Redirect to / |
+| /auth/signup | GET | Sign Up Page |
+| /auth/signup | POST | Validate sign up form |
+| /profile | GET | Show logged in user's profile |
+| /profile | PUT | Update user's profile |
+| /profile | DELETE | Delete user |
+| /profile/delete | GET | Show user delete confirmation |
+| /profile/edit | GET | Show edit form for profile |
+| /profile/location | GET | Show search bar for location |
+| /profile/location-selector | GET | Show results of location search |
+| /search | GET | Show another user's profile if it matches search parameters|
+| /conversation | GET | Show list of matched users to talk to |
+| /conversation/:idx | GET | Show all messages in that conversation |
+
+
+
+
+
+## Technologies/Libraries/Frameworks/Etc
+* Node.js + Express - Server
+* Postgres + PostGIS - Database
+* Sequelize - ORM
+* Redis - To store sessions
+* Pug Templating - Server Side Rendering
+* Tachyons - Styling (CSS Utility classes)
+* Socket.io - Realtime updates/chat
+* Alertify - Prettier alerts
+* Cloudinary - To upload profile photo
+* Mapbox API - Geocoding
+
+
+### BUGS/TODO:
+* Searching for other users requires a page refresh, which makes the DB search for another list
+* Selecting a new location doesn't return back to the edit page
+* There are no notifications when new messages or matches are made

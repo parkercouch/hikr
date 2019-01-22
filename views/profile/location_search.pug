@@ -2,7 +2,7 @@ extends ../layout.pug
 include ../mixins/pace_and_distance.pug
 
 block content
-  form.bg-white.w-75-ns.w-95.pa2.center.mb4.br2.shadow-1.flex.flex-column.justify-around(action="/profile/location-selector" method="GET")
+  form.bg-white.w8-ns.w-95.pa2.center.mb4.br2.shadow-1.flex.flex-column.justify-around(action="/profile/location-selector" method="GET")
     label(for="city") City:
     input.w-95.mb2(type="text", name="city" required)
 

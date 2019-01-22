@@ -2,7 +2,7 @@ extends ../layout.pug
 include ../mixins/pace_and_distance.pug
 
 block content
-  form.user-card-container.bg-white.w-75-ns.w-95.pa2.center.mb4.br2.shadow-1.flex.flex-column.justify-around(action="/profile?_method=PUT" method="POST")
+  form.user-card-container.bg-white.w8-ns.w-95.pa2.center.mb4.br2.shadow-1.flex.flex-column.justify-around(action="/profile?_method=PUT" method="POST")
     img#currentPhoto.w-100.mb1(src= profile.photo, alt="Profile Picture")
     #upload_widget.w5.h2.pointer.mb2.center(class= button.secondary) Upload New Photo
 
