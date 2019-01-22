@@ -24,10 +24,13 @@ router.get('/', loggedIn, (req, res) => {
     const alreadyMatching = matchingUsers.map(u => u.userToId);
     alreadyMatching.push(req.user.id);
 
+    const sridPoint = `SRID=4326;POINT(${req.user.profile.location.coordinates[0]} ${req.user.profile.location.coordinates[1]})`;
+
     db.profile.findAll({
       where: {
         [Op.and]: [
           { userId: { [Op.notIn]: alreadyMatching } },
+          Sequelize.fn('ST_DWithin', sridPoint, Sequelize.col('location'), 80500),
           Sequelize.literal(`"desiredPace" & ${req.user.profile.desiredPace} != 0`),
           Sequelize.literal(`"desiredDistance" & ${req.user.profile.desiredDistance} != 0`),
         ],
