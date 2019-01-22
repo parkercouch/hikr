@@ -8,7 +8,7 @@ block content
         img.img.br2(src= nextUser.photo, alt= nextUser.displayName + "'s profile photo")
       .col.fl
         h1#userId.db.row.w-100.pv2-ns.ma0.tc(data-userid= nextUser.id)= nextUser.displayName 
-        h2.db.row.w-100.pv1-ns.ma0.tc= nextUser.location
+        h2.db.row.w-100.pv1-ns.ma0.tc= nextUser.displayLocation
     .row.mb3.ph2
       .col.fl.w-50.h2.flex.justify-center
         +desiredPace(nextUser.desiredPace)

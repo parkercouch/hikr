@@ -18,6 +18,9 @@ module.exports = {
       location: {
         type: Sequelize.GEOGRAPHY('POINT', 4326),
       },
+      displayLocation: {
+        type: Sequelize.STRING,
+      },
       summary: {
         type: Sequelize.TEXT,
       },

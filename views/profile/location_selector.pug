@@ -1,0 +1,16 @@
+extends ../layout.pug
+include ../mixins/pace_and_distance.pug
+
+block content
+  .bg-white.w-75-ns.w-95.pa2.center.mb4.br2.shadow-1.flex.flex-column.justify-around.tc
+    h1 Search Results:
+    ul.pa0
+      each location in results
+        li.list
+          h2= location.city + ', ' + location.state
+          h5= '(' + location.long + ',' + location.lat + ')'
+          form(action="/profile?_method=PUT", method="POST")
+            input(type="hidden" name="displayLocation" value= location.city + ', ' + location.state)
+            input(type="hidden", name="lat", value= location.lat)
+            input(type="hidden", name="long", value= location.long)
+            input.w5.h2.mb3(class= button.secondary, type="submit", value="Select Location")

@@ -55,6 +55,7 @@ async function signUpValidate(req, res, next) {
         userId: newUser.id,
         displayName: newUser.firstName,
         location: Sequelize.fn('ST_GeogFromText', 'POINT(-122.330833 47.606388)'),
+        displayLocation: 'Seattle, WA',
         summary: 'No bio has been added yet',
         photo: 'https://res.cloudinary.com/deluxington/image/upload/b_rgb:c9c9c9,c_pad,h_500,w_1000/v1548108379/hikr_profile_photos/placeholder_photo.png',
         desiredPace: 0,

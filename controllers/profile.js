@@ -1,6 +1,9 @@
 const express = require('express');
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const db = require('../models');
+require('dotenv').load();
 
+const geocodingClient = mbxGeocoding({ accessToken: process.env.MAPBOX_TOKEN });
 const router = express.Router();
 
 // MIDDLEWARE
@@ -33,7 +36,18 @@ router.get('/delete', loggedIn, (req, res) => {
 // PUT /profile -- update users profile
 router.put('/', loggedIn, async (req, res) => {
   const updatedProfile = req.body;
-  
+
+  // If there are new coords then format for sequelize
+  if (updatedProfile.lat && updatedProfile.long) {
+    updatedProfile.location = {
+      type: 'Point',
+      coordinates: [updatedProfile.long, updatedProfile.lat],
+    };
+    // Set to 0 to have deleted below
+    updatedProfile.lat = 0;
+    updatedProfile.long = 0;
+  }
+
   if (updatedProfile.desiredPace) {
     if (updatedProfile.desiredPace.length > 1) {
       updatedProfile.desiredPace = updatedProfile.desiredPace
@@ -76,5 +90,37 @@ router.put('/', loggedIn, async (req, res) => {
 router.delete('/profile', loggedIn, (req, res) => {
   res.send(`Deleting ${req.user.id}`);
 });
+
+// GET /profile/location -- Show location search bar
+router.get('/location', loggedIn, (req, res) => {
+  res.render('profile/location_search');
+});
+
+// GET /profile/location-selector -- Show results of city search
+router.get('/location-selector', loggedIn, (req, res) => {
+  geocodingClient
+    .forwardGeocode({
+      query: `${req.query.city}, ${req.query.state}`,
+      types: ['place'],
+      countries: ['us'],
+    })
+    .send()
+    .then((response) => {
+      const results = response.body.features.map((city) => {
+        const placeName = city.place_name.split(', ');
+        return {
+          city: placeName[0],
+          state: placeName[1],
+          lat: city.center[1],
+          long: city.center[0],
+        };
+      });
+      res.render('profile/location_selector', { results });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 
 module.exports = router;

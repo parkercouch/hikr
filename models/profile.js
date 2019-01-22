@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     userId: DataTypes.INTEGER,
     displayName: DataTypes.STRING,
     location: DataTypes.GEOGRAPHY('POINT', 4326),
+    displayLocation: DataTypes.STRING,
     summary: DataTypes.TEXT,
     photo: {
       type: DataTypes.STRING,
