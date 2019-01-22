@@ -3,6 +3,8 @@ const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const db = require('../models');
 require('dotenv').load();
 
+const Op = require('sequelize').Op;
+
 const geocodingClient = mbxGeocoding({ accessToken: process.env.MAPBOX_TOKEN });
 const router = express.Router();
 
@@ -28,9 +30,9 @@ router.get('/edit', loggedIn, async (req, res) => {
   res.render('profile/edit', { profile: req.user.profile });
 });
 
-// GET /profile/delete -- Show delete warning with text input to validate
+// GET /profile/delete -- Show delete warning
 router.get('/delete', loggedIn, (req, res) => {
-  res.send(`Do you want to delete ${req.user.id}`);
+  res.render('profile/delete');
 });
 
 // PUT /profile -- update users profile
@@ -87,8 +89,65 @@ router.put('/', loggedIn, async (req, res) => {
 });
 
 // DELETE /profile -- delete user and all their connections
-router.delete('/profile', loggedIn, (req, res) => {
-  res.send(`Deleting ${req.user.id}`);
+router.delete('/', loggedIn, async (req, res) => {
+  // Gather needed data in object
+  const info = {
+    deletedUserId: req.user.id,
+    conversations: req.user.conversations,
+  };
+  // Log user out
+  req.logout();
+
+  // Remove all messages by user
+  try {
+    // Remove all messages where user is involved
+    await db.message.destroy({
+      where: {
+        conversationId: { [Op.in]: info.conversations },
+      },
+    });
+
+    // Remove the conversations user is apart of
+    await db.conversation.destroy({
+      where: {
+        id: { [Op.in]: info.conversations },
+      },
+    });
+
+    // Remove all connnections associated with the conversation
+    await db.userConversation.destroy({
+      where: {
+        conversationId: { [Op.in]: info.conversations },
+      },
+    });
+
+    // Remove all matches involving user
+    await db.matching.destroy({
+      where: {
+        [Op.or]: [
+          { userToId: info.deletedUserId },
+          { userFromId: info.deletedUserId },
+        ],
+      },
+    });
+
+    // Remove profile
+    await db.profile.destroy({
+      where: {
+        userId: info.deletedUserId,
+      },
+    });
+
+    // Remove user
+    await db.user.destroy({
+      where: {
+        id: info.deletedUserId,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  return res.redirect('/');
 });
 
 // GET /profile/location -- Show location search bar

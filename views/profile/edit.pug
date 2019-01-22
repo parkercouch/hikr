@@ -60,6 +60,8 @@ block content
     input#photoUrl(type="hidden", name="photo", value= profile.photo)
 
     input.w4.center(class= button.primary, type="submit", value="Update")
+    a.w4.center.mt4(class= button.secondary, href="/profile/delete") Delete
+
 
 block scripts
   script(src="https://widget.cloudinary.com/v2.0/global/all.js")

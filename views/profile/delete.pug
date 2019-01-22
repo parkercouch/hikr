@@ -1,0 +1,9 @@
+extends ../layout.pug
+
+block content
+  form.bg-white.w8-ns.w-95.pa2.center.mb4.br2.shadow-1.flex.flex-column.justify-around(action="/profile?_method=DELETE" method="POST")
+    h1.f5 Are you sure you want to delete your account?
+    h1.f5.mb1 (Type anything to continue)
+    input#delete.mb3(type="text", name="delete" required)
+
+    input.w4.center.bg-dark-red(class= button.secondary, type="submit", value="DELETE")
