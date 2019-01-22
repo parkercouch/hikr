@@ -2,7 +2,7 @@ extends ../layout.pug
 include ../mixins/pace_and_distance.pug
 
 block content
-  .user-card-container.bg-white.w8-ns.w-95.pa0.center.mb4.br2.shadow-1.flex.flex-column.justify-around
+  .user-card-container.bg-white.w8-ns.w-95.pa0.center.mb4.br2.shadow-1.flex.flex-column.justify-around.animated(class= animation.card_enter)
     .row.flex.flex-column.force-top-top.mb3
       .col.fl.w-100
         img.img.br2(src= nextUser.photo, alt= nextUser.displayName + "'s profile photo")
@@ -21,5 +21,9 @@ block content
       button#yep.col.fl.w-33.h2.h3-ns.bg-light-green.f3.br2 Yep
   
 block scripts
+  script.
+    const enterAnimation = "#{animation.card_enter}";
+    const exitAnimationNope = "#{animation.card_exit_nope}";
+    const exitAnimationYep = "#{animation.card_exit_yep}";
   script(src="/js/search/search.js")
 

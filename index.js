@@ -67,14 +67,10 @@ const PORT = process.env.PORT || 3000;
 app.set('view engine', 'pug');
 
 // MIDDLEWARE
-// override with POST having ?_method=DELETE
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'static')));
 app.use(parser.urlencoded({ extended: false }));
-
 app.use(session);
-
-
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
@@ -175,11 +171,12 @@ match.on('connection', (socket) => {
         },
       ];
 
-      db.userConversation.bulkCreate(newAssociations);
+      await db.userConversation.bulkCreate(newAssociations);
+      return match.to(socket.id).emit('yep', newConversation.id);
     } catch (err) {
       console.log(err);
     }
-    return match.to(socket.id).emit('yep', `You matched ${userToId}`);
+    return match.to(socket.id).emit('waiting', 'Matched, but something happened');
   });
 });
 
