@@ -1,6 +1,10 @@
 # hikr
 Tindr style app for hiking buddies
 
+# School Branch
+This branch is a copy of the state of this app after 1 week of working on it and when it was turned
+in for a school project.
+
 ## Deployed Link
 [https://hikr-app.herokuapp.com/](https://hikr-app.herokuapp.com/)
 
